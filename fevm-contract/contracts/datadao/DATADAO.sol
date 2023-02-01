@@ -8,7 +8,7 @@ import "../openzeppelin/contracts/utils/math/SafeMath.sol";
 import "../openzeppelin/contracts/access/AccessControl.sol";
 
 
-The admin property comes accesscontrol.sol 
+
 contract DataDAO is IDataDAO, DataDAOCore, AccessControl {
 
     using SafeMath for uint256;
