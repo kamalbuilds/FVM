@@ -1,20 +1,17 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react';
 import {
  Flex,
  Box,
- Text,
  Heading,
- Card,
- CardHeader,
- CardBody,
- Stack,
- Spinner,
  Button,
  Grid,
+ Input,
 } from "@chakra-ui/react";
-import { StarIcon } from '@chakra-ui/icons';
 
-import { getStorageProviders } from '../../../../pages/api/miners/miners';
+import { getStorageProviders, getStorageProviderById } from '../../../../pages/api/miners/miners';
+import { MinerCard } from './MinerCard';
+import { MinerDetailsCard } from './MinerDetailsCard';
+import HTMLInputElement from 'react';
 
 type Miners = {
  id: number,
@@ -24,26 +21,26 @@ type Miners = {
 
 const StorageProviders = () => {
  const [miners, setMiners] = useState<Miners[]>([]);
+ const [minerDetails, setMinerDetails] = useState<Miners[]>([]);
  const [refresh, setRefresh] = useState(false);
  const [providerIDs, setProviderIds] = useState<string[]>([])
+ const [searchId, setSearchId] = useState<string>();
  const [error, setError] = useState<unknown>(null);
  const numberOfCards = 20;
 
  // Turn state object with stored api object into an array
  const minerArray = miners ? Object.entries(miners) : [];
-
  // Necessary Conditional check to ensure data is there
  const minerResults = minerArray[1]?.[1];
-
  // Make a deep copy of the array but only the property 'results' and its value are needed (we get that from minerResults)
  const minerArrayCopy = minerResults ? JSON.parse(JSON.stringify(minerResults)) : [];
-
  // Returns an array that has random id's
  const getMultipleRandom = (num: number) => {
   const shuffled = [...minerArrayCopy].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, num);
  }
 
+ // Handles refreshing the miners
  const handleRefresh = () => {
   setRefresh((prev) => !prev);
 
@@ -52,7 +49,7 @@ const StorageProviders = () => {
  }
 
  // Gets new api data and Lets us refresh the page
- const fetchData = async () => {
+ const fetchMiners = async () => {
   try {
    const data = await getStorageProviders();
    setMiners(data);
@@ -61,52 +58,75 @@ const StorageProviders = () => {
   }
  }
 
- useEffect(() => {
-  fetchData();
- }, [refresh]);
-
- const minerCard = minerResults && providerIDs.map((id: string, index: number) => {
-
-  if(error) {
-   console.log("error:", error);
+ // Turn object into an array
+  const minerDetailsData = minerDetails ? Object.entries(minerDetails) : [];
+ // Necessary conditional
+  const minerDetailsExist = minerDetailsData[1]?.[1];
+ // Making a deep copy of our minerDetails array
+  const minerDetailsDataArrayCopy = minerDetailsExist ? JSON.parse(JSON.stringify(minerDetailsExist)) : [];
+  // Creating input element reference
+  const inputRef = useRef<HTMLInputElement>(null);
+  // Saves input element value to state variable and passed to api call
+  const handleEnter = () => {
+   const id = inputRef.current?.value;
+   if(id) {
+    setSearchId(id);
+   }
   }
 
-  return (
-   <Card key={index} m={4}>
-    <CardHeader>
-      <Heading as="h5" size="md">
-        Miner ID: {id}
-      </Heading>
-    </CardHeader>
-    <CardBody>
-      <Text>
-        Reputation Score:{" "}
-        <Stack isInline>
-          {[1, 2, 3, 4, 5].map((i) => (
-            <StarIcon
-              key={i}
-              color={id ? "teal" : "gray"}
-            />
-          ))}
-        </Stack>
-      </Text>
-    </CardBody>
-   </Card>
-  );
- })
+ const fetchMinerDetails = async () => {
+  try {
+   if(searchId) {
+    const data2 = await getStorageProviderById(searchId, undefined);
+    setMinerDetails(data2 as Miners[]);
+   }
+  } catch(err) {
+   setError(err);
+  }
+ }
+
+ useEffect(() => {
+  fetchMiners();
+ }, [refresh]);
+
+ useEffect(() => {
+  fetchMinerDetails();
+ }, [searchId])
 
  return (
   <Flex align="center" justify="center" direction="column" >
    <Flex gap={20}>
     <Heading as="h1" size="lg" mb={8}>
-     Miners
+     Random Miners
     </Heading>
     <Button onClick={handleRefresh}>Refresh</Button>
    </Flex>
    <Box>
     <Grid templateColumns='repeat(5, 1fr)' gap={1}>
-     {minerResults ? minerCard : <Spinner /> }
+     {minerResults && providerIDs.map((id, index) => (
+       <MinerCard id={id} key={index} error={error} />
+      ))}
     </Grid>
+   </Box>
+   <br/>
+   <Box>
+    <Heading>Search for Storage Provider</Heading>
+    <Flex>
+     <h3>Gets more details about a storage provider..</h3>
+     <span style={{backgroundColor: 'blue'}}>(params: ID, CID)</span>
+    </Flex>
+    <br />
+    <Flex align="center" justify="center" direction="row">
+     <Box>
+      <Flex>
+       <Input type="text" ref={inputRef} placeholder="Enter the ID of the Storage Provider" />
+       <Button style={{marginLeft: '1rem'}} type="submit" onClick={handleEnter}>Enter</Button>
+      </Flex>
+      {searchId?.length && (
+       <MinerDetailsCard details={minerDetailsDataArrayCopy} searchId={searchId} />
+      )}
+     </Box>
+    </Flex>
    </Box>
   </Flex>
   )
