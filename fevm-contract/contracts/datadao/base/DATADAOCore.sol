@@ -2,11 +2,11 @@
 
 pragma solidity ^0.8.13;
 
-import { MarketAPI } from "../../filecoin-solidity/v0.8/MarketAPI.sol";
-import { CommonTypes } from "../../filecoin-solidity/v0.8/types/CommonTypes.sol";
-import { MarketTypes } from "../../filecoin-solidity/v0.8/types/MarketTypes.sol";
-import { Actor, HyperActor } from "../../filecoin-solidity/v0.8/utils/Actor.sol";
-import { Misc } from "../../filecoin-solidity/v0.8/utils/Misc.sol";
+import { MarketAPI } from "../../lib/filecoin-solidity/v0.8/MarketAPI.sol";
+import { CommonTypes } from "../../lib/filecoin-solidity/v0.8/types/CommonTypes.sol";
+import { MarketTypes } from "../../lib/filecoin-solidity/v0.8/types/MarketTypes.sol";
+import { Actor, HyperActor } from "../../lib/filecoin-solidity/v0.8/utils/Actor.sol";
+import { Misc } from "../../lib/filecoin-solidity/v0.8/utils/Misc.sol";
 import {CALL_ACTOR_ID, DEFAULT_FLAG, METHOD_SEND, ADMIN_ROLE, MEMBER_ROLE } from "./DataDAOConstants.sol";
 
 contract DataDAOCore {

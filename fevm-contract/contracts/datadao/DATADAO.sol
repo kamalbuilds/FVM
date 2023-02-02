@@ -4,8 +4,8 @@ pragma solidity ^0.8.13;
 import {CALL_ACTOR_ID, DEFAULT_FLAG, METHOD_SEND, ADMIN_ROLE, MEMBER_ROLE } from "./base/DataDAOConstants.sol";
 import "./base/DataDAOCore.sol";
 import "./interfaces/IDataDAO.sol";
-import "../openzeppelin/contracts/utils/math/SafeMath.sol";
-import "../openzeppelin/contracts/access/AccessControl.sol";
+import "../lib/openzeppelin-contracts/contracts/utils/match/SafeMath.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
 
 
