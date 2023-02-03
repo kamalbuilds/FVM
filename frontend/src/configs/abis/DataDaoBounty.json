@@ -1,0 +1,899 @@
+{
+	"compiler": {
+		"version": "0.8.17+commit.8df45f5f"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address[]",
+						"name": "admins",
+						"type": "address[]"
+					},
+					{
+						"internalType": "address",
+						"name": "_membershipNFT",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "DataDAO_CallerIsNotMember",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "DataDAO__CallerIsNotAdmin",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "DataDAO__DataSizeNotMatched",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "DataDAO__DealProposalPolicyCheckFailed",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "DataDAO__DealProposalWasNotApproved",
+				"type": "error"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "adminAddress",
+						"type": "address"
+					}
+				],
+				"name": "AdminAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "cidraw",
+						"type": "bytes"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "dealStartBlockStamp",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "dealDurationInDays",
+						"type": "uint256"
+					}
+				],
+				"name": "DealAcivated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "cidraw",
+						"type": "bytes"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "decision",
+						"type": "bytes32"
+					}
+				],
+				"name": "DealApproval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "bytes",
+						"name": "cidraw",
+						"type": "bytes"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "size",
+						"type": "uint256"
+					}
+				],
+				"name": "DealProposed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					}
+				],
+				"name": "MemberAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "previousAdminRole",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "newAdminRole",
+						"type": "bytes32"
+					}
+				],
+				"name": "RoleAdminChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "RoleGranted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "RoleRevoked",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "DEFAULT_ADMIN_ROLE",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint64",
+						"name": "_networkDealID",
+						"type": "uint64"
+					}
+				],
+				"name": "activateDataSetDealBySP",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "_cidraw",
+						"type": "bytes"
+					},
+					{
+						"internalType": "enum IDataDAO.DealState",
+						"name": "_choice",
+						"type": "uint8"
+					}
+				],
+				"name": "approveOrRejectDataSet",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					},
+					{
+						"internalType": "uint64",
+						"name": "",
+						"type": "uint64"
+					}
+				],
+				"name": "cidProviders",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "_cidraw",
+						"type": "bytes"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_size",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_dealDurationInDays",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_dealStorageFees",
+						"type": "uint256"
+					}
+				],
+				"name": "createDataSetDealProposal",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "dealClient",
+				"outputs": [
+					{
+						"internalType": "uint64",
+						"name": "",
+						"type": "uint64"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "dealStorageFees",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "deals",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "proposedBy",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "cidraw",
+						"type": "bytes"
+					},
+					{
+						"internalType": "uint256",
+						"name": "size",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "storageFees",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dealStartBlockStamp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dealDurationInDays",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum IDataDAO.DealState",
+						"name": "dealState",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "_cidraw",
+						"type": "bytes"
+					}
+				],
+				"name": "fundDeal",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "fundings",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "_cidraw",
+						"type": "bytes"
+					}
+				],
+				"name": "getDealState",
+				"outputs": [
+					{
+						"internalType": "enum IDataDAO.DealState",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					}
+				],
+				"name": "getRoleAdmin",
+				"outputs": [
+					{
+						"internalType": "bytes32",
+						"name": "",
+						"type": "bytes32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "grantRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "hasRole",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "joinDAO",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "membershipNFT",
+				"outputs": [
+					{
+						"internalType": "contract IERC721",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "renounceRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes32",
+						"name": "role",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "revokeRole",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes4",
+						"name": "interfaceId",
+						"type": "bytes4"
+					}
+				],
+				"name": "supportsInterface",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "_cidraw",
+						"type": "bytes"
+					}
+				],
+				"name": "withdrawFunds",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "_cidraw",
+						"type": "bytes"
+					}
+				],
+				"name": "withdrawReward",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"activateDataSetDealBySP(uint64)": {
+					"details": "Activates the deal",
+					"params": {
+						"_networkDealID": ": Deal ID generated after the deal is created on Filecoin Network "
+					}
+				},
+				"approveOrRejectDataSet(bytes,uint8)": {
+					"details": "Approves or Rejects the proposal - This would enable to govern the data that is stored by the DAO",
+					"params": {
+						"_choice": ": decision of the DAO on the proposal",
+						"_cidraw": ": Id of the cred."
+					}
+				},
+				"createDataSetDealProposal(bytes,uint256,uint256,uint256)": {
+					"details": "Creates a new deal proposal. ",
+					"params": {
+						"_cidraw": ": cid for which the deal proposal is to be created.",
+						"_dealDurationInDays": ": deal duration in Days",
+						"_size": ": size of cid"
+					}
+				},
+				"getDealState(bytes)": {
+					"details": "Returns current state of the deal",
+					"params": {
+						"_cidraw": ": Id of the cred."
+					}
+				},
+				"getRoleAdmin(bytes32)": {
+					"details": "Returns the admin role that controls `role`. See {grantRole} and {revokeRole}. To change a role's admin, use {_setRoleAdmin}."
+				},
+				"grantRole(bytes32,address)": {
+					"details": "Grants `role` to `account`. If `account` had not been already granted `role`, emits a {RoleGranted} event. Requirements: - the caller must have ``role``'s admin role."
+				},
+				"hasRole(bytes32,address)": {
+					"details": "Returns `true` if `account` has been granted `role`."
+				},
+				"joinDAO()": {
+					"details": "Function to allow members with membership NFT to join the DAO"
+				},
+				"renounceRole(bytes32,address)": {
+					"details": "Revokes `role` from the calling account. Roles are often managed via {grantRole} and {revokeRole}: this function's purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced). If the calling account had been revoked `role`, emits a {RoleRevoked} event. Requirements: - the caller must be `account`."
+				},
+				"revokeRole(bytes32,address)": {
+					"details": "Revokes `role` from `account`. If `account` had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must have ``role``'s admin role."
+				},
+				"supportsInterface(bytes4)": {
+					"details": "See {IERC165-supportsInterface}."
+				},
+				"withdrawReward(bytes)": {
+					"details": "Once the deal is expired the SP can withdraw the rewards",
+					"params": {
+						"_cidraw": ": Id of the cred."
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/data-dao/DataDAOBounty.sol": "DataDAOBounty"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@ensdomains/buffer/contracts/Buffer.sol": {
+			"keccak256": "0xd6dd3b0b327288f8e1b711a609f4040fea602e2ad4bba9febdf2f33b4e56eb0c",
+			"license": "BSD-2-Clause",
+			"urls": [
+				"bzz-raw://78a722152d40d778a97595e5224fac1d138f4e659dcb1a926148909ef4c4bdca",
+				"dweb:/ipfs/QmRxScF53x5ywsChLNpMUCdg2TSoCWTfo8G65Mo3sGY55b"
+			]
+		},
+		"@openzeppelin/contracts/utils/Strings.sol": {
+			"keccak256": "0xa4d1d62251f8574deb032a35fc948386a9b4de74b812d4f545a1ac120486b48a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8c969013129ba9e651a20735ef659fef6d8a1139ea3607bd4b26ddea2d645634",
+				"dweb:/ipfs/QmVhVa6LGuzAcB8qgDtVHRkucn4ihj5UZr8xBLcJkP6ucb"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/Math.sol": {
+			"keccak256": "0xa1e8e83cd0087785df04ac79fb395d9f3684caeaf973d9e2c71caef723a3a5d6",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://33bbf48cc069be677705037ba7520c22b1b622c23b33e1a71495f2d36549d40b",
+				"dweb:/ipfs/Qmct36zWXv3j7LZB83uwbg7TXwnZSN1fqHNDZ93GG98bGz"
+			]
+		},
+		"contracts/data-dao/DataDAO.sol": {
+			"keccak256": "0x9f79fb19a18f9aced2eb034685eb6b3e304fe4766fee1de68191b4e51f073d7f",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://afad0e92ae00d9c1599eaa41f5f5f629b0a4dee7b286ebf4aaf9679c0b824af7",
+				"dweb:/ipfs/QmT9Q48KiogAweies4SUdryTVBmnmKTNXvcZZp9q6Cxe5r"
+			]
+		},
+		"contracts/data-dao/DataDAOBounty.sol": {
+			"keccak256": "0x0f7ab90912b58a33219728d9a6d24f22ddc791ef30c37dfe60feba575ea85a4e",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://279ffc5738bcc00b5c8f8892e4999784c8b98b538833b2198ca27de9ddea9095",
+				"dweb:/ipfs/QmdECooo2Eo9XNk5f5vs7VDAM9zZQFWXNgoEpg7KWxwrNc"
+			]
+		},
+		"contracts/data-dao/base/DataDAOConstants.sol": {
+			"keccak256": "0xb340e62d990e7d82fc857b4abd04ef15ba4099aaeb8875a72e68b08bfe1e6b53",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://69a247e51a2308ee6915d2526895291807370b883ab0f6eddebc24f5e652dffa",
+				"dweb:/ipfs/QmYvDWfwESEFuNv3quQde5erPnMfZCrzkqtTBZsCXKDoT8"
+			]
+		},
+		"contracts/data-dao/base/DataDAOCore.sol": {
+			"keccak256": "0x081850ab6e7b6371d246ed02ad7ee358294800f00f47f15583e7335ab9ba2811",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://e25563c535743647ae4d9773b7e9e0d137c96db832615a44d8f045c6d488a6c6",
+				"dweb:/ipfs/Qmc98fF4UXGgJwQLu4fs5bLN9YwcvgmPzneRfASvLyB8mx"
+			]
+		},
+		"contracts/data-dao/interfaces/IDataDAO.sol": {
+			"keccak256": "0xcbaa7b1f9dfc209545897a2b233470340c4327708606c862ec94c3103f353604",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://846493f9c3f9775cd13864357804bfbc13b06494bea52b264a7f2af827837e00",
+				"dweb:/ipfs/QmamrYqMzmpQKwjFoLTA8xjwJ9BsrVQvcBfvgbKmj7WBxF"
+			]
+		},
+		"contracts/filecoin-solidity/v0.8/MarketAPI.sol": {
+			"keccak256": "0x129b46f71c545391c4d49787774fc0ae9b373860837c76a645cf62ea5a770ee9",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://9e4c59be071002eb09a04aca2cc8d73591c411452eec02dc6dd94fa1405b2bcb",
+				"dweb:/ipfs/QmXUhbGrHN3Mrki9Gxus5LdPzmLsKtQUWU4Z1yCxqfn5md"
+			]
+		},
+		"contracts/filecoin-solidity/v0.8/cbor/BigIntCbor.sol": {
+			"keccak256": "0x4619eff96bc4ff69525a88fc4e46b8e6bdb5958ed5d694c9d60f49fb1ef169cb",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://5f99745d79ed1cd6ec9359dfbf538475742f139c791198e250704e31ee06ca49",
+				"dweb:/ipfs/QmYNrErYyS31z4iczHHME5RkUAuKrHut1KD2ENNzT65qaT"
+			]
+		},
+		"contracts/filecoin-solidity/v0.8/cbor/MarketCbor.sol": {
+			"keccak256": "0x17ba1d29cf5537b993a6fd3a5b86550a9aadb7874cdabb8c7ccc5214c1e8c004",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://004ed22d3f6abbb5a20c5389eab69cbf7e78128d4558cd290bd582ad7e248807",
+				"dweb:/ipfs/QmZJqyQyV74MkK6g9nJmKT3mYSvbYnozBuaRUnPkDYfvef"
+			]
+		},
+		"contracts/filecoin-solidity/v0.8/types/CommonTypes.sol": {
+			"keccak256": "0xa08db4b175de9872189dc1ce687c3c5ea5839f0d67515f904c0235eb2475e559",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://7811396518d4fd50141cff277f0c6cf1190e132038961ea62001b1961f78136f",
+				"dweb:/ipfs/QmcWkdNXGwa3GxK3fFB2B65iujAP3UVqCmChySDdh6d8CL"
+			]
+		},
+		"contracts/filecoin-solidity/v0.8/types/MarketTypes.sol": {
+			"keccak256": "0xf5b724a6949054a501f16271529ddeb2db012544f8df57d0e457c73cbce62539",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://429850284a094553a63541bb93e751fb60dd33621044592c19a1a057db32bffe",
+				"dweb:/ipfs/QmPTyGp7HEjWcCb9FsXJz9uucBWfRPbvZjvFUKYgVDwvYx"
+			]
+		},
+		"contracts/filecoin-solidity/v0.8/utils/Actor.sol": {
+			"keccak256": "0x3eb3fb5ae14274cf7b9443cd423d568570b9109af7c6aea6258ff2f32b543f9e",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://f68b80ea2315d723a7eb1104b3d61043c7ac94a2acf08e2e9d366708f59dcb37",
+				"dweb:/ipfs/QmckZCNXrdHbHKXWYBW7j57kuKL4g6xmp3ZaFW6JPzbcvR"
+			]
+		},
+		"contracts/filecoin-solidity/v0.8/utils/CborDecode.sol": {
+			"keccak256": "0x3502c9b3408b2391745c642ef547f930f42099cfab813a70af1dd39525aa3a43",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://0ab5590064f125d835cb44322b4992b734a0202ea1967e524c4c67665298c676",
+				"dweb:/ipfs/QmfTDpe8pyQxCTLyovGjTwvTWfkZ7C1EY5UvghjPzETnt5"
+			]
+		},
+		"contracts/filecoin-solidity/v0.8/utils/Misc.sol": {
+			"keccak256": "0x2b7477d6d6f83047a2c2b988fa924d2826a8271137f80d2b77ebba6936fd45b4",
+			"license": "Apache-2.0",
+			"urls": [
+				"bzz-raw://c32901c3e71deff9340227d0c03f391e821a8f66d45d9b4d44419c4b0fb8291a",
+				"dweb:/ipfs/QmZUSsC1cHW5S4Dw52dd8k28qfnTBVQTpUPVzCdGKhatcX"
+			]
+		},
+		"contracts/openzeppelin/contracts/access/AccessControl.sol": {
+			"keccak256": "0x4ad76d85dc4f6105bbb80115d781d9642b836010070301b32eb869146a80d11d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://300ad65e9f8b52d4ae33f980c4a930c9df0d8eba36853327ba9beccc3b64955e",
+				"dweb:/ipfs/QmWdF6s8HGrRe5sRqc9idaUsmoXkuECCDcvM2Z77xiHHvS"
+			]
+		},
+		"contracts/openzeppelin/contracts/access/IAccessControl.sol": {
+			"keccak256": "0x59ce320a585d7e1f163cd70390a0ef2ff9cec832e2aa544293a00692465a7a57",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://bb2c137c343ef0c4c7ce7b18c1d108afdc9d315a04e48307288d2d05adcbde3a",
+				"dweb:/ipfs/QmUxhrAQM3MM3FF5j7AtcXLXguWCJBHJ14BRdVtuoQc8Fh"
+			]
+		},
+		"contracts/openzeppelin/contracts/token/ERC721/IERC721.sol": {
+			"keccak256": "0x516a22876c1fab47f49b1bc22b4614491cd05338af8bd2e7b382da090a079990",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a439187f7126d31add4557f82d8aed6be0162007cd7182c48fd934dbab8f3849",
+				"dweb:/ipfs/QmRPLguRFvrRJS7r6F1bcLvsx6q1VrgjEpZafyeL8D7xZh"
+			]
+		},
+		"contracts/openzeppelin/contracts/utils/Context.sol": {
+			"keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6df0ddf21ce9f58271bdfaa85cde98b200ef242a05a3f85c2bc10a8294800a92",
+				"dweb:/ipfs/QmRK2Y5Yc6BK7tGKkgsgn3aJEQGi5aakeSPZvS65PV8Xp3"
+			]
+		},
+		"contracts/openzeppelin/contracts/utils/Strings.sol": {
+			"keccak256": "0x32c202bd28995dd20c4347b7c6467a6d3241c74c8ad3edcbb610cd9205916c45",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8179c356adb19e70d6b31a1eedc8c5c7f0c00e669e2540f4099e3844c6074d30",
+				"dweb:/ipfs/QmWFbivarEobbqhS1go64ootVuHfVohBseerYy9FTEd1W2"
+			]
+		},
+		"contracts/openzeppelin/contracts/utils/introspection/ERC165.sol": {
+			"keccak256": "0xd10975de010d89fd1c78dc5e8a9a7e7f496198085c151648f20cba166b32582b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://fb0048dee081f6fffa5f74afc3fb328483c2a30504e94a0ddd2a5114d731ec4d",
+				"dweb:/ipfs/QmZptt1nmYoA5SgjwnSgWqgUSDgm4q52Yos3xhnMv3MV43"
+			]
+		},
+		"contracts/openzeppelin/contracts/utils/introspection/IERC165.sol": {
+			"keccak256": "0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://be161e54f24e5c6fae81a12db1a8ae87bc5ae1b0ddc805d82a1440a68455088f",
+				"dweb:/ipfs/QmP7C3CHdY9urF4dEMb9wmsp1wMxHF6nhA2yQE5SKiPAdy"
+			]
+		},
+		"contracts/openzeppelin/contracts/utils/math/SafeMath.sol": {
+			"keccak256": "0xa2f576be637946f767aa56601c26d717f48a0aff44f82e46f13807eea1009a21",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://973868f808e88e21a1a0a01d4839314515ee337ad096286c88e41b74dcc11fc2",
+				"dweb:/ipfs/QmfYuZxRfx2J2xdk4EXN7jKg4bUYEMTaYk9BAw9Bqn4o2Y"
+			]
+		},
+		"solidity-cborutils/contracts/CBOR.sol": {
+			"keccak256": "0xe03d8889bf66e7a30e8010b022b6c86ad0f8c19764cc6c7f50b6bb4ad860cb9b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://bbcfc16dda4f5785938acce3f6733a2a27fbcc7451da05e46e5493907c1bb790",
+				"dweb:/ipfs/QmTk1okPxoUykGuXPH3zD1LB57FwPuGbgYmViXXJtuYMUQ"
+			]
+		}
+	},
+	"version": 1
+}
