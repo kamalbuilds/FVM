@@ -28,7 +28,9 @@ const AddProposal = () => {
   const [dealStorageFees, setDealStorageFees] = useState(0);
 
   const router = useRouter();
-  const {data: signer } = useSigner();
+
+
+  const {data: signer } = useSigner({chainId: 3141});
   console.log("signer:", signer);
 
   const contract = useContract({

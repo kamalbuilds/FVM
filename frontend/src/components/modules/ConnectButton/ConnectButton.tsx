@@ -21,7 +21,7 @@ const ConnectButton = () => {
     try {
       const { account, chain } = await connectAsync();
 
-      const challenge = await requestChallengeAsync({ address: account, chainId: chain.id || "3141" });
+      const challenge = await requestChallengeAsync({ address: account, chainId: chain.id });
 
       if (!challenge) {
         throw new Error('No challenge received');

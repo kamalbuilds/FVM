@@ -262,6 +262,35 @@
 						"type": "bytes"
 					},
 					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "bids",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "provider",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					},
+					{
 						"internalType": "uint64",
 						"name": "",
 						"type": "uint64"
@@ -727,11 +756,11 @@
 			]
 		},
 		"contracts/data-dao/DataDAOBounty.sol": {
-			"keccak256": "0x0f7ab90912b58a33219728d9a6d24f22ddc791ef30c37dfe60feba575ea85a4e",
+			"keccak256": "0x9f589b6ad91ea2c0cf209929b37aa8d559d82a5c906602877271b854204a55b9",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://279ffc5738bcc00b5c8f8892e4999784c8b98b538833b2198ca27de9ddea9095",
-				"dweb:/ipfs/QmdECooo2Eo9XNk5f5vs7VDAM9zZQFWXNgoEpg7KWxwrNc"
+				"bzz-raw://3294b78eed1c38d42343bebe50416e77bd51c42db9767ef8fbdb26243cf89b6f",
+				"dweb:/ipfs/QmUYFQg95HdNYmMDvvTP2QjkF3dxPTaZW63qrMyQjtoGkV"
 			]
 		},
 		"contracts/data-dao/base/DataDAOConstants.sol": {
