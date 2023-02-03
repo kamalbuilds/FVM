@@ -1,0 +1,58 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Audi 250",
+      "price": "500000",
+      "owner": "admiralty20",
+      "last_bidder": "samson35"
+    },
+    {
+      "id": 2,
+      "name": "Lamborghini S50",
+      "price": "200000",
+      "owner": "susaske40",
+      "last_bidder": "geraldt01"
+    },
+    {
+      "id": 3,
+      "name": "Ferrari F560",
+      "price": 1100000000,
+      "owner": "samson35",
+      "last_bidder": "Thy"
+    },
+    {
+      "name": "Apple",
+      "price": 7,
+      "owner": "John",
+      "last_bidder": "kamal"
+    },
+    {
+      "name": "mango",
+      "price": 34,
+      "owner": "kamal"
+    },
+    {
+      "name": "",
+      "price": 0,
+      "owner": "ahsan"
+    },
+    {
+      "name": "",
+      "price": 0,
+      "owner": "ahsan"
+    },
+    {
+      "owner": "ahsan"
+    },
+    {
+      "owner": "ahsan"
+    },
+    {
+      "owner": "ahsan"
+    },
+    {
+      "owner": "ahsan"
+    }
+  ]
+}
