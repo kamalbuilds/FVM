@@ -4,10 +4,11 @@ import { Card, CardBody, CardHeader, Heading, Stack, Text } from "@chakra-ui/rea
 type MinerCardProps = {
  id: string,
  key: number,
- error: unknown
+ error: unknown,
+ score: number,
 }
 
-const minerCard = ({id, error} : MinerCardProps) => {
+const minerCard = ({id, error , score} : MinerCardProps) => {
 
  if(error) {
    return (
@@ -23,7 +24,7 @@ const minerCard = ({id, error} : MinerCardProps) => {
     </Card>
    )
   }
-
+  let starsToShow = Math.floor(score / 20);
  return (
   <Card m={4}>
    <CardHeader>
@@ -38,7 +39,7 @@ const minerCard = ({id, error} : MinerCardProps) => {
          {[1, 2, 3, 4, 5].map((i) => (
            <StarIcon
              key={i}
-             color={id ? "teal" : "gray"}
+             color={i <= starsToShow ? "teal" : "gray"}
            />
          ))}
        </Stack>

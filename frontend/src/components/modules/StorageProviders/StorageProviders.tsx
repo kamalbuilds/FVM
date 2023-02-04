@@ -20,6 +20,7 @@ type Miners = {
 }
 
 const StorageProviders = () => {
+
  const [miners, setMiners] = useState<Miners[]>([]);
  const [minerDetails, setMinerDetails] = useState<Miners[]>([]);
  const [refresh, setRefresh] = useState(false);
@@ -27,7 +28,7 @@ const StorageProviders = () => {
  const [searchId, setSearchId] = useState<string>();
  const [error, setError] = useState<unknown>(null);
  const numberOfCards = 20;
-
+  const [minerscore, setMinerscore] = useState(0);
  // Turn state object with stored api object into an array
  const minerArray = miners ? Object.entries(miners) : [];
  // Necessary Conditional check to ensure data is there
@@ -57,6 +58,23 @@ const StorageProviders = () => {
    setError(err);
   }
  }
+
+
+
+ useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`https://api.filrep.io/api/miners?search=${searchId}`);
+      const data = await response.json();
+      setMinerscore(data.miners[0].score);
+    } catch (err) {
+      setError(err);
+    }
+  };
+
+  fetchData();
+}, [searchId]);
+
 
  // Turn object into an array
   const minerDetailsData = minerDetails ? Object.entries(minerDetails) : [];
@@ -104,7 +122,7 @@ const StorageProviders = () => {
    <Box>
     <Grid templateColumns='repeat(5, 1fr)' gap={1}>
      {minerResults && providerIDs.map((id, index) => (
-       <MinerCard id={id} key={index} error={error} />
+       <MinerCard id={id} key={index} error={error} score={minerscore}  />
       ))}
     </Grid>
    </Box>

@@ -5,3 +5,10 @@ Prize category aim -
 🛠 Discovery tools: Best use of FVM to improve transparency around Filecoin economy participants (e.g., storage providers, storage clients etc.).
 
 Building a platform where Storage bounties would be listed where storage providers compete to win deals, bringing the price down for clients.
+
+
+Push Protocol is used to notify the Users on the platform 
+
+Client - Get Notified as soon as a provider places a bid for your proposal .
+
+SP - Get notified as soon as your bid gets accepted 
