@@ -37,11 +37,14 @@ export const hyperspace :  Chain  = {
     symbol: 'tFIL',
   },
   rpcUrls: {
-    chainstack : "https://filecoin-hyperspace.chainstacklabs.com/rpc/v1",
+    chainstack : {
+      http: ["https://filecoin-hyperspace.chainstacklabs.com/rpc/v1"]
+    },
     default: {
-      http: "https://api.hyperspace.node.glif.io/rpc/v0",
+      http: ["https://api.hyperspace.node.glif.io/rpc/v0"]
     }
   },
+  
 };
 
 const { provider, webSocketProvider } = configureChains(

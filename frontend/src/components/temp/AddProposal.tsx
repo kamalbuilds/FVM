@@ -36,7 +36,7 @@ const AddProposal = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if(await signer?.getAddress) {
+      if (await signer?.getAddress) {
         const cidInstance = new CID(cid);
         await createProposal({ cid: cidInstance, dataSize, dealDurationInDays, dealStorageFees }, contract);
 
@@ -47,19 +47,17 @@ const AddProposal = () => {
           dealDurationInDays,
           dealStorageFees
         });
-        if(formData?.length) {
+        if (formData?.length) {
           router.push('/proposalMarketPlace');
         }
       } else {
-        console.error('signer not available')
+        console.error('signer not available');
       }
-
-    } catch(error) {
-      return console.error(error);
+    } catch (error) {
+      console.error(error);
     }
+};
 
-    return;
-  };
 
   useEffect(() => {
     const stringifiedFormData = JSON.stringify(formData);
