@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/router';
-import { Product } from '../interfaces';
+import { useEffect, useState } from 'react'
+import CID from 'cids';
 import {
   CircularProgress,
   Button,
@@ -18,26 +16,42 @@ import {
   Td,
 } from '@chakra-ui/react'
 
+import { getAccountBalance, getAccountTransactions, getBalance, getDealsByCID } from '../../../pages/api/beryxClient/clientMethods';
+
+type expectedProposalParameters = {
+  name: string,
+  cid: CID | string | undefined,
+  dataSize: number,
+  dealDurationInDays: number,
+  dealStorageFees: number
+}
+
 const Proposals = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [collection, setCollection] = useState<expectedProposalParameters[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const router = useRouter()
-
-
   useEffect(() => {
-    const fetchProducts = () => {
-      fetch('http://localhost:4000/api')
-        .then((res) => res.json())
-        .then((data) => {
-          setProducts(data.products);
-          setLoading(false);
-        });
-    };
-    fetchProducts();
+    const newProposal = JSON.parse(sessionStorage.getItem('newProposal') || '{}');
+    if (!Object.keys(newProposal).length) {return;}
+
+    // don't add any duplicate objects
+    if (collection.some((object) => JSON.stringify(object) === JSON.stringify(newProposal))) {return;}
+
+    setCollection((prevCollection) => [...prevCollection, newProposal]);
+    setLoading(false);
+    sessionStorage.removeItem('newProposal');
+    console.log('collection', collection);
+    console.log("checking", newProposal);
   }, []);
 
-  const handleBidBtn = (product: Product) =>
-    router.push(`/products/bid/${product.name}/${product.price}`);
+  const handleTest = async() => {
+    if(collection?.length) {
+      const txHistory = await getAccountTransactions('0xCb9456Cc51789F28916fBdF11496458afAcDFe5e');
+      console.log(txHistory);
+
+    }
+
+  }
+
 
   return (
     <>
@@ -58,32 +72,24 @@ const Proposals = () => {
             </Thead>
             {/* Data for display, we will later get it from the server */}
             <Tbody>
-              {loading ? (
-                <CircularProgress isIndeterminate color='green.300' />
-
-              ) : products.map((product: Product) => {
-
-                return (
-                  <Tr key={product.id}>
-                    <Td>{product.name}</Td>
-                    <Td>{product.price}</Td>
-                    <Td>{product.last_bidder}</Td>
-                    <Td>{product.owner}</Td>
+              {loading ? <CircularProgress isIndeterminate color='green.300' /> :
+                collection?.length && collection.map((item, i) => (
+                  <Tr key={i}>
+                    <Td>{item.name}</Td>
+                    <Td>{item.cid?.toString()}</Td>
+                    <Td>{item.dataSize}</Td>
+                    <Td>{item.dealDurationInDays}</Td>
+                    <Td>{item.dealStorageFees}</Td>
                     <Td>
-                      <Button colorScheme='green' onClick={() => handleBidBtn(product)}>Edit</Button>
+                      <Button colorScheme='green' onClick={() => {console.log('fund')}}>Fund</Button>
                     </Td>
-                  </Tr>)
-              })}
+                    <Td>
+                      <Button colorScheme='green' onClick={handleTest}>Test</Button>
+                    </Td>
+                  </Tr>
+              ))}
             </Tbody>
           </Table>
-        </Flex>
-        <Flex justifyContent="center" mt={10}>
-          <Button colorScheme='blue'>
-            <Link href="/products/add" >
-              Add Products
-            </Link>
-          </Button>
-
         </Flex>
       </VStack>
 

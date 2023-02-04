@@ -42,7 +42,8 @@ const NAV_LINKS: ISubNav[] = [
       },
     ],
   },
-  {label: 'Miners', href: '/storageProviders'}
+  {label: 'Miners', href: '/storageProviders'},
+  {label: 'Proposal MarketPlace', href: '/proposalMarketPlace'}
 ];
 
 export default NAV_LINKS;
