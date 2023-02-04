@@ -3611,6 +3611,13 @@
   resolved "https://registry.npmjs.org/@zag-js/focus-visible/-/focus-visible-0.1.0.tgz"
   integrity sha512-PeaBcTmdZWcFf7n1aM+oiOdZc+sy14qi0emPIeUuGMTjbP0xLGrZu43kdpHnWSXy7/r4Ubp/vlg50MCV8+9Isg==
 
+"@zondax/beryx@^0.8.1":
+  version "0.8.1"
+  resolved "https://registry.npmjs.org/@zondax/beryx/-/beryx-0.8.1.tgz"
+  integrity sha512-QJwYHGEaxLpLVC1s9+4QYXV1AWzhS8DJKpE/9MPihyugJ/Z058DZWLg5KHb5LnGEAkLNeY0k/YtOEasMS3eosw==
+  dependencies:
+    axios "^0.27.2"
+
 abitype@^0.2.5:
   version "0.2.5"
   resolved "https://registry.npmjs.org/abitype/-/abitype-0.2.5.tgz"
@@ -8583,6 +8590,13 @@ react-focus-lock@^2.9.1:
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
 
+react-hooks-global-state@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/react-hooks-global-state/-/react-hooks-global-state-2.1.0.tgz"
+  integrity sha512-tLSRhB5pD3QiNsGOo893m8lVZXDuIkdin8PKKmGqnJniAaD/tzl3BdAkba1vOv1/q1bpuN+9zrqqAHkRJhXzJw==
+  dependencies:
+    zustand "4.0.0"
+
 "react-is@^16.12.0 || ^17.0.0 || ^18.0.0", react-is@^16.13.1, react-is@^16.7.0, "react-is@>= 16.8.0":
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
@@ -10405,5 +10419,12 @@ zustand@^4.1.4:
   version "4.1.5"
   resolved "https://registry.npmjs.org/zustand/-/zustand-4.1.5.tgz"
   integrity sha512-PsdRT8Bvq22Yyh1tvpgdHNE7OAeFKqJXUxtJvj1Ixw2B9O2YZ1M34ImQ+xyZah4wZrR4lENMoDUutKPpyXCQ/Q==
+  dependencies:
+    use-sync-external-store "1.2.0"
+
+zustand@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/zustand/-/zustand-4.0.0.tgz"
+  integrity sha512-OrsfQTnRXF1LZ9/vR/IqN9ws5EXUhb149xmPjErZnUrkgxS/gAHGy2dPNIVkVvoxrVe1sIydn4JjF0dYHmGeeQ==
   dependencies:
     use-sync-external-store "1.2.0"

@@ -1,25 +1,12 @@
+import { Dispatch, SetStateAction, useState } from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
+import { extendTheme } from '@chakra-ui/react';
+import type { AppProps } from 'next/app';
+import { SessionProvider } from 'next-auth/react';
 import { createClient, WagmiConfig } from 'wagmi';
 import { configureChains } from '@wagmi/core';
 import { Chain } from '@wagmi/core';
-
-export const hyperspace  = {
-  id: 3_141,
-  name: 'Hyperspace',
-  network: 'Hyperspace',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'Filecoin',
-    symbol: 'tFIL',
-  },
-  rpcUrls: {
-    chainstack : "https://filecoin-hyperspace.chainstacklabs.com/rpc/v1",
-    default: {
-      http: "https://api.hyperspace.node.glif.io/rpc/v0", 
-    }
-  },
-} as const satisfies Chain 
-
+import { publicProvider } from 'wagmi/providers/public';
 import {
   arbitrum,
   arbitrumGoerli,
@@ -38,14 +25,24 @@ import {
   polygonMumbai,
   sepolia,
 } from '@wagmi/core/chains';
+import CID from 'cids';
 
-import { extendTheme } from '@chakra-ui/react';
-import { publicProvider } from 'wagmi/providers/public';
-import { SessionProvider } from 'next-auth/react';
-import type { AppProps } from 'next/app';
-
-
-
+export const hyperspace  = {
+  id: 3_141,
+  name: 'Hyperspace',
+  network: 'Hyperspace',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Filecoin',
+    symbol: 'tFIL',
+  },
+  rpcUrls: {
+    chainstack : "https://filecoin-hyperspace.chainstacklabs.com/rpc/v1",
+    default: {
+      http: "https://api.hyperspace.node.glif.io/rpc/v0",
+    }
+  },
+} as const satisfies Chain
 
 const { provider, webSocketProvider } = configureChains(
   [
@@ -84,6 +81,7 @@ const config = {
 const theme = extendTheme({ config });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
+
   return (
     <ChakraProvider resetCSS theme={theme}>
       <WagmiConfig client={client}>
