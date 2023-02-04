@@ -57,6 +57,8 @@ const AddProposal = () => {
     } catch(error) {
       return console.error(error);
     }
+
+    return;
   };
 
   useEffect(() => {

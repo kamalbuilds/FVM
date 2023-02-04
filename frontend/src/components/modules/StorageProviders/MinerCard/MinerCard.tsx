@@ -24,7 +24,7 @@ const minerCard = ({id, error , score} : MinerCardProps) => {
     </Card>
    )
   }
-  let starsToShow = Math.floor(score / 20);
+  const starsToShow = Math.floor(score / 20);
  return (
   <Card m={4}>
    <CardHeader>

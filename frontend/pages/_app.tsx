@@ -27,7 +27,7 @@ import {
 } from '@wagmi/core/chains';
 import CID from 'cids';
 
-export const hyperspace  = {
+export const hyperspace :  Chain  = {
   id: 3_141,
   name: 'Hyperspace',
   network: 'Hyperspace',
@@ -42,7 +42,7 @@ export const hyperspace  = {
       http: "https://api.hyperspace.node.glif.io/rpc/v0",
     }
   },
-} as const satisfies Chain
+};
 
 const { provider, webSocketProvider } = configureChains(
   [
