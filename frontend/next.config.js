@@ -5,6 +5,7 @@ const nextConfig = {
   images: {
     domains: ['raw.githubusercontent.com'],
   },
+  optimizeImages: false,
 };
 
 module.exports = nextConfig;
