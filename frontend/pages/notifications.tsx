@@ -54,7 +54,7 @@ const NotificationsTest = () => {
         user: isCAIP ? getCAIPAddress(env, account) : account,
         // user: isCAIP ? getCAIPAddress(env, devWorkingAddress) : devWorkingAddress,
         limit: 30,
-        env: env
+        env
       });
 
       console.log('feeds: ', feeds);
@@ -74,7 +74,7 @@ const NotificationsTest = () => {
       const spamks = await PushAPI.user.getFeeds({
         user: isCAIP ? getCAIPAddress(env, account) : account,
         spam: true,
-        env: env
+        env
       });
 
       setSpams(spamks);

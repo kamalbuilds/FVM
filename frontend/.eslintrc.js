@@ -6,6 +6,7 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": "off",
     "etc/no-commented-out-code": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "no-confusing-arrow": "off",
   },
   env: {
     'browser': true

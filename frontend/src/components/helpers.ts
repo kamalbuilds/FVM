@@ -41,9 +41,15 @@ export function validateCAIP(addressInCAIP: string) {
     address
   ] = addressInCAIP.split(':');
 
-  if (!blockchain) return false;
-  if (!networkId) return false;
-  if (!address) return false;
+  if (!blockchain){
+    return false;
+  } 
+  if (!networkId) {
+    return false;
+  }
+  if (!address) {
+    return false;
+  }
 
   const validatorFn = AddressValidators[blockchain];
 
@@ -51,7 +57,8 @@ export function validateCAIP(addressInCAIP: string) {
 }
 
 export function getFallbackETHCAIPAddress(env: string, address: string) {
-  let chainId = 1; // by default PROD
+  let chainId = 1; 
+  // by default PROD
 
   if (env === Constants.ENV.DEV || env === Constants.ENV.STAGING) {
     chainId = 42;
@@ -64,20 +71,21 @@ export function getFallbackETHCAIPAddress(env: string, address: string) {
  * This helper 
  *  checks if a VALID CAIP
  *    return the CAIP
- *  else
+ *  elseit
  *    check if valid ETH
  *      return a CAIP representation of that address (EIP155 + env)
- *    else 
+ *    elseit 
  *      throw error!
  */
 export function getCAIPAddress(env: string, address: string, msg?: string) {
-  if (validateCAIP(address)) {
-    return address;
-  } else {
-    if (isValidETHAddress(address)) {
-      return getFallbackETHCAIPAddress(env, address);
-    } else {
+    if (validateCAIP(address)) {
+        return address;
+      }
+      
+      if (isValidETHAddress(address)) {
+        return getFallbackETHCAIPAddress(env, address);
+      }
+      
       throw Error(`Invalid Address! ${msg}`);
-    }
-  }
+      
 }
