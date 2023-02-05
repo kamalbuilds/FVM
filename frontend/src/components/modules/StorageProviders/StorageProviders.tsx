@@ -62,19 +62,21 @@ const StorageProviders = () => {
 
 
 
-//  useEffect(() => {
-//   const fetchData = async () => {
-//     try {
-//       const response = await fetch(`https://api.filrep.io/api/miners?search=${searchId}`);
-//       const data = await response.json();
-//       setMinerscore(data.miners[0].score);
-//     } catch (err) {
-//       setError(err);
-//     }
-//   };
+ useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`https://api.filrep.io/api/miners?search=searchId`);
+      const data = await response.json();
+      console.log(data, "score data");
+      setMinerscore(data.miners[0].score);
+      console.log(minerscore, "score");
+    } catch (err) {
+      setError(err);
+    }
+  };
 
-//   fetchData();
-// }, [searchId]);
+  fetchData();
+}, [searchId]);
 
 
  // Turn object into an array
@@ -143,7 +145,7 @@ const StorageProviders = () => {
   <Flex align="center" justify="center" direction="column" >
    <Flex gap={20}>
     <Heading as="h1" size="lg" mb={8}>
-     Random Miners
+     Search for Miners
     </Heading>
     <Button onClick={handleRefresh}>Refresh</Button>
    </Flex>

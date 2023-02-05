@@ -36,9 +36,15 @@ const AddProposal = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if (await signer?.getAddress) {
+      if (await signer?.getAddress && contract) {
         const cidInstance = new CID(cid);
-        await createProposal({ cid: cidInstance, dataSize, dealDurationInDays, dealStorageFees }, contract);
+        const contractProps = {
+          createDataSetDealProposal: contract.createDataSetDealProposal.bind(contract),
+          address: contract.address,
+          abi: contract.abi,
+          signerOrProvider: contract.signerOrProvider,
+        };
+        await createProposal({ cid: cidInstance, dataSize, dealDurationInDays, dealStorageFees }, contractProps);
 
         await setFormData({
           name,
@@ -47,7 +53,7 @@ const AddProposal = () => {
           dealDurationInDays,
           dealStorageFees
         });
-        if (formData?.length) {
+        if (formData) {
           router.push('/proposalMarketPlace');
         }
       } else {

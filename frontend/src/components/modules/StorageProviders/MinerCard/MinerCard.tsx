@@ -19,7 +19,7 @@ const minerCard = ({id, error } : MinerCardProps) => {
         </Heading>
       </CardHeader>
       <CardBody>
-        <Text>error: {error as string}</Text>
+        <Text>error: {String(error)}</Text>
       </CardBody>
     </Card>
    )

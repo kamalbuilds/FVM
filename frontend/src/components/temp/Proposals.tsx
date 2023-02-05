@@ -16,7 +16,7 @@ import {
   Td,
 } from '@chakra-ui/react'
 
-import { getAccountBalance, getAccountTransactions, getBalance, getDealsByCID } from '../../../pages/api/beryxClient/clientMethods';
+import { getAccountBalance, getAccountTransactions, getDealsByCID } from '../../../pages/api/beryxClient/clientMethods';
 
 type expectedProposalParameters = {
   name: string,
