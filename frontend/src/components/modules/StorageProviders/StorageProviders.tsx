@@ -8,7 +8,7 @@ import {
  Input,
 } from "@chakra-ui/react";
 
-import { getStorageProviders, getStorageProviderById } from '../../../../pages/api/miners/miners';
+import { getStorageProviders, getStorageProviderById , queryStorageAsk } from '../../../../pages/api/miners/miners';
 import { MinerCard } from './MinerCard';
 import { MinerDetailsCard } from './MinerDetailsCard';
 import HTMLInputElement from 'react';
@@ -26,6 +26,7 @@ const StorageProviders = () => {
  const [refresh, setRefresh] = useState(false);
  const [providerIDs, setProviderIds] = useState<string[]>([])
  const [searchId, setSearchId] = useState<string>();
+ const [peerID, setPeerID] = useState<string>();
  const [error, setError] = useState<unknown>(null);
  const numberOfCards = 20;
   const [minerscore, setMinerscore] = useState(0);
@@ -61,19 +62,19 @@ const StorageProviders = () => {
 
 
 
- useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`https://api.filrep.io/api/miners?search=${searchId}`);
-      const data = await response.json();
-      setMinerscore(data.miners[0].score);
-    } catch (err) {
-      setError(err);
-    }
-  };
+//  useEffect(() => {
+//   const fetchData = async () => {
+//     try {
+//       const response = await fetch(`https://api.filrep.io/api/miners?search=${searchId}`);
+//       const data = await response.json();
+//       setMinerscore(data.miners[0].score);
+//     } catch (err) {
+//       setError(err);
+//     }
+//   };
 
-  fetchData();
-}, [searchId]);
+//   fetchData();
+// }, [searchId]);
 
 
  // Turn object into an array
@@ -85,11 +86,22 @@ const StorageProviders = () => {
   // Creating input element reference
   const inputRef = useRef<HTMLInputElement>(null);
   // Saves input element value to state variable and passed to api call
+  const askRef = useRef<HTMLInputElement>(null);
   const handleEnter = () => {
    const id = inputRef.current?.value;
    if(id) {
     setSearchId(id);
+    console.log(id, "id changed to this");
    }
+  }
+
+  const handleask = async () => {
+    const peerid = askRef.current?.value;
+    if(peerid) {
+      console.log(peerid, "peerid changed to this");
+      console.log(searchId, "searchid changed to this");
+     setPeerID(peerid);
+    }
   }
 
  const fetchMinerDetails = async () => {
@@ -111,6 +123,22 @@ const StorageProviders = () => {
   fetchMinerDetails();
  }, [searchId])
 
+
+ const askStorage = async () => {
+  try {
+    if(peerID) {
+      const data3 = await queryStorageAsk(peerID , searchId);
+      console.log(data3,'queryStorageAsk');
+    }
+  } catch(err) {
+    setError(err);
+  }
+  }
+
+  useEffect(() => {
+    askStorage();
+   }, [peerID])
+  
  return (
   <Flex align="center" justify="center" direction="column" >
    <Flex gap={20}>
@@ -122,7 +150,8 @@ const StorageProviders = () => {
    <Box>
     <Grid templateColumns='repeat(5, 1fr)' gap={1}>
      {minerResults && providerIDs.map((id, index) => (
-       <MinerCard id={id} key={index} error={error} score={minerscore}  />
+       <MinerCard id={id} key={index} error={error}   />
+      //  score={minerscore}
       ))}
     </Grid>
    </Box>
@@ -145,8 +174,21 @@ const StorageProviders = () => {
       )}
      </Box>
     </Flex>
+    <br/>
+    <Flex align="center" justify="center" direction="row">
+     <Box>
+      <Flex>
+       <Input type="text" ref={askRef} placeholder="Enter the peerID for storage ask" />
+       <Button style={{marginLeft: '1rem'}} type="submit" onClick={handleask}>Ask</Button>
+      </Flex>
+      {/* {searchId?.length && (
+       <MinerDetailsCard details={minerDetailsDataArrayCopy} searchId={searchId} />
+      )} */}
+      </Box>
+      </Flex>
    </Box>
   </Flex>
+
   )
 }
 

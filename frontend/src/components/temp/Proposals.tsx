@@ -64,10 +64,10 @@ const Proposals = () => {
             <Thead>
               <Tr>
                 <Th>Name</Th>
-                <Th>Price</Th>
-                <Th>Last Bidder</Th>
-                <Th>Creator</Th>
-                <Th>Edit</Th>
+                <Th>CID</Th>
+                <Th>Data Size</Th>
+                <Th>Deal duration Proposed</Th>
+                <Th>Locked Funds</Th>
               </Tr>
             </Thead>
             {/* Data for display, we will later get it from the server */}

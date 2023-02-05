@@ -61,6 +61,7 @@ export const getStorageProviderById = async (id: string, cid: any = undefined): 
     }),
   });
     const data = await response.json();
+    console.log('data', data);
     return data;
   } catch (error) {
     console.error('api error:', error);
@@ -68,3 +69,33 @@ export const getStorageProviderById = async (id: string, cid: any = undefined): 
   }
 }
 
+export const queryStorageAsk = async (peerid: string, id: any): Promise<MinerData[]> => {
+ try {
+
+  // const params = [id];
+  // if(peerid) {
+  //   params.push(peerid);
+  // }
+
+  const response = await fetch(baseURL, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    mode: "no-cors",
+    body: JSON.stringify({
+      jsonrpc: "2.0",
+      method: "Filecoin.ClientQueryAsk",
+      params: [peerid, id],
+      id: 1,
+    }),
+  });
+  
+    const data = await response.json();
+    console.log('data', data);
+    return data;
+  } catch (error) {
+    console.error('api error:', error);
+    return Promise.reject(error);
+  }
+}

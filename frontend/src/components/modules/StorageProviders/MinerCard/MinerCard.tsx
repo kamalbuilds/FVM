@@ -5,10 +5,10 @@ type MinerCardProps = {
  id: string,
  key: number,
  error: unknown,
- score: number,
+//  score: number,
 }
 
-const minerCard = ({id, error , score} : MinerCardProps) => {
+const minerCard = ({id, error } : MinerCardProps) => {
 
  if(error) {
    return (
@@ -24,7 +24,7 @@ const minerCard = ({id, error , score} : MinerCardProps) => {
     </Card>
    )
   }
-  const starsToShow = Math.floor(score / 20);
+  // const starsToShow = Math.floor(score / 20);
  return (
   <Card m={4}>
    <CardHeader>
@@ -39,7 +39,7 @@ const minerCard = ({id, error , score} : MinerCardProps) => {
          {[1, 2, 3, 4, 5].map((i) => (
            <StarIcon
              key={i}
-             color={i <= starsToShow ? "teal" : "gray"}
+             color={i ? "teal" : "gray"}
            />
          ))}
        </Stack>
