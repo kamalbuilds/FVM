@@ -14,9 +14,12 @@ import {
   Tr,
   Th,
   Td,
-} from '@chakra-ui/react'
-
+} from '@chakra-ui/react';
+import { useContract, useSigner } from 'wagmi';
+import { DaoBountyContractAddress , DataDaoBountyABI  } from 'configs/constants';
 import { getAccountBalance, getAccountTransactions, getDealsByCID } from '../../../pages/api/beryxClient/clientMethods';
+
+import { fundDeal } from 'configs/methods/contractMethods';
 
 type expectedProposalParameters = {
   name: string,
@@ -26,9 +29,22 @@ type expectedProposalParameters = {
   dealStorageFees: number
 }
 
+
+
+
+
+
+
 const Proposals = () => {
+  const {data: signer } = useSigner({chainId: 3141});
+  const contract = useContract({
+    address: DaoBountyContractAddress,
+    abi: DataDaoBountyABI,
+    signerOrProvider: signer
+  });
   const [collection, setCollection] = useState<expectedProposalParameters[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [cid, setCid] = useState('');
   useEffect(() => {
     const newProposal = JSON.parse(sessionStorage.getItem('newProposal') || '{}');
     if (!Object.keys(newProposal).length) {return;}
@@ -38,7 +54,7 @@ const Proposals = () => {
 
     setCollection((prevCollection) => [...prevCollection, newProposal]);
     setLoading(false);
-    // sessionStorage.removeItem('newProposal');
+    sessionStorage.removeItem('newProposal');
     console.log('collection', collection);
     console.log("checking", newProposal);
   }, []);
@@ -50,6 +66,27 @@ const Proposals = () => {
 
     }
 
+  }
+
+  const handleFundButton = async(cid: any, amount: number) => {
+    try {
+      if (await signer?.getAddress && contract) {
+        const cidInstance = new CID(cid);
+        const contractProps = {
+          fundDeal: contract.fundDeal.bind(contract),
+          address: contract.address,
+          abi: contract.abi,
+          signerOrProvider: contract.signerOrProvider,
+        };
+        await fundDeal({cid : cidInstance, amount}, contractProps);
+
+      } else {
+        console.error('signer not available');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    
   }
 
 
@@ -84,7 +121,7 @@ const Proposals = () => {
                       <Button colorScheme='green' onClick={() => {console.log('fund')}}>Fund</Button>
                     </Td>
                     <Td>
-                      <Button colorScheme='green' onClick={handleTest}>Test</Button>
+                      <Button colorScheme='green' onClick={() => handleFundButton(item.cid, item.dealStorageFees)}>Fund</Button>
                     </Td>
                   </Tr>
               ))}

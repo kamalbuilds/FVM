@@ -12,9 +12,9 @@ const Home = () => {
   return (
     <Heading size="md" marginBottom={6}>
     {/* <StorageRequestForm /> */}
-    <AddProposal />
-    <BidProposal socket={socket} />
-    <Proposals />
+      <AddProposal />
+    {/* <BidProposal socket={socket} /> */}
+    {/* <Proposals /> */}
     </Heading>
   );
 };
