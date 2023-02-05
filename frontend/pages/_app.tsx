@@ -28,6 +28,16 @@ import {
 } from '@wagmi/core/chains';
 import CID from 'cids';
 
+
+interface Web3ReactState {
+  chainId?: number;
+  account?: string | null | undefined;
+  active: boolean;
+  error?: Error;
+  library?: unknown;
+}
+
+
 export const hyperspace :  Chain  = {
   id: 3_141,
   name: 'Hyperspace',
@@ -77,8 +87,7 @@ const client = createClient({
   autoConnect: true,
 });
 
-  const account = "0xCF8D2Da12A032b3f3EaDC686AB18551D8fD6c132";
-  const chainId = 3_141;
+
 
 const env ="staging";
 
@@ -89,13 +98,22 @@ const config = {
 
 const theme = extendTheme({ config });
 
+
+const web3Data : Web3ReactState = {
+  chainId: 3_141,
+  account: "0xCF8D2Da12A032b3f3EaDC686AB18551D8fD6c132",
+  active: true,
+  error: undefined,
+  library: undefined,
+}
+
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [isCAIP, setIsCAIP] = useState(false);
   return (
     <ChakraProvider resetCSS theme={theme}>
       <WagmiConfig client={client}>
         <EnvContext.Provider value={{ env, isCAIP }}>
-          <Web3Context.Provider value={{ account , chainId }}>
+          <Web3Context.Provider value={web3Data}>
             <SessionProvider session={pageProps.session} refetchInterval={0}>
               <Component {...pageProps} />
             </SessionProvider>

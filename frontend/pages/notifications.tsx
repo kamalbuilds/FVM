@@ -71,13 +71,13 @@ const NotificationsTest = () => {
   const loadSpam = useCallback(async () => {
     try {
       setLoading(true);
-      const spams = await PushAPI.user.getFeeds({
+      const spamks = await PushAPI.user.getFeeds({
         user: isCAIP ? getCAIPAddress(env, account) : account,
         spam: true,
         env: env
       });
 
-      setSpams(spams);
+      setSpams(spamks);
   
     } catch (e) {
       console.error(e);
@@ -86,11 +86,11 @@ const NotificationsTest = () => {
     }
   }, [account, env, isCAIP]);
 
-  const toggleTheme = () => {
-    setTheme(lastTheme => {
-      return lastTheme === 'dark' ? 'light' : 'dark'
-    })
-  };
+//   const toggleTheme = () => {
+//     setTheme(lastTheme => {
+//       return lastTheme === 'dark' ? 'light' : 'dark'
+//     })
+//   };
 
   const toggleSubscribedModal = () => {
     setShowSubscribe((lastVal) => !lastVal);
@@ -110,10 +110,7 @@ const NotificationsTest = () => {
   return (
       <div>
         <Header>
-          <h2>Notifications Test page</h2>
-
-          {/* <TestModal /> */}
-
+          <h2>Here are all the Notifications</h2>
         </Header>
                 
         <TabButtons>
