@@ -7,6 +7,7 @@ import { createClient, WagmiConfig } from 'wagmi';
 import { configureChains } from '@wagmi/core';
 import { Chain } from '@wagmi/core';
 import { publicProvider } from 'wagmi/providers/public';
+import { Web3Context, EnvContext } from 'context';
 import {
   arbitrum,
   arbitrumGoerli,
@@ -26,6 +27,16 @@ import {
   sepolia,
 } from '@wagmi/core/chains';
 import CID from 'cids';
+
+
+interface Web3ReactState {
+  chainId?: number;
+  account?: string | null | undefined;
+  active: boolean;
+  error?: Error;
+  library?: unknown;
+}
+
 
 export const hyperspace :  Chain  = {
   id: 3_141,
@@ -76,6 +87,10 @@ const client = createClient({
   autoConnect: true,
 });
 
+
+
+const env ="staging";
+
 const config = {
   initialColorMode: 'dark',
   useSystemColorMode: false,
@@ -83,15 +98,29 @@ const config = {
 
 const theme = extendTheme({ config });
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
 
+const web3Data : Web3ReactState = {
+  chainId: 3_141,
+  account: "0xCF8D2Da12A032b3f3EaDC686AB18551D8fD6c132",
+  active: true,
+  error: undefined,
+  library: undefined,
+}
+
+const MyApp = ({ Component, pageProps }: AppProps) => {
+  const [isCAIP, setIsCAIP] = useState(false);
   return (
     <ChakraProvider resetCSS theme={theme}>
       <WagmiConfig client={client}>
-        <SessionProvider session={pageProps.session} refetchInterval={0}>
-          <Component {...pageProps} />
-        </SessionProvider>
+        <EnvContext.Provider value={{ env, isCAIP }}>
+          <Web3Context.Provider value={web3Data}>
+            <SessionProvider session={pageProps.session} refetchInterval={0}>
+              <Component {...pageProps} />
+            </SessionProvider>
+          </Web3Context.Provider>
+        </EnvContext.Provider>
       </WagmiConfig>
+      
     </ChakraProvider>
   );
 };

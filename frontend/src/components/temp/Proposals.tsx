@@ -38,7 +38,7 @@ const Proposals = () => {
 
     setCollection((prevCollection) => [...prevCollection, newProposal]);
     setLoading(false);
-    sessionStorage.removeItem('newProposal');
+    // sessionStorage.removeItem('newProposal');
     console.log('collection', collection);
     console.log("checking", newProposal);
   }, []);
