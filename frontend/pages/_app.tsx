@@ -7,6 +7,7 @@ import { createClient, WagmiConfig } from 'wagmi';
 import { configureChains } from '@wagmi/core';
 import { Chain } from '@wagmi/core';
 import { publicProvider } from 'wagmi/providers/public';
+import { Web3Context, EnvContext } from 'context';
 import {
   arbitrum,
   arbitrumGoerli,
@@ -76,6 +77,11 @@ const client = createClient({
   autoConnect: true,
 });
 
+  const account = "0xCF8D2Da12A032b3f3EaDC686AB18551D8fD6c132";
+  const chainId = 3_141;
+
+const env ="staging";
+
 const config = {
   initialColorMode: 'dark',
   useSystemColorMode: false,
@@ -84,14 +90,19 @@ const config = {
 const theme = extendTheme({ config });
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-
+  const [isCAIP, setIsCAIP] = useState(false);
   return (
     <ChakraProvider resetCSS theme={theme}>
       <WagmiConfig client={client}>
-        <SessionProvider session={pageProps.session} refetchInterval={0}>
-          <Component {...pageProps} />
-        </SessionProvider>
+        <EnvContext.Provider value={{ env, isCAIP }}>
+          <Web3Context.Provider value={{ account , chainId }}>
+            <SessionProvider session={pageProps.session} refetchInterval={0}>
+              <Component {...pageProps} />
+            </SessionProvider>
+          </Web3Context.Provider>
+        </EnvContext.Provider>
       </WagmiConfig>
+      
     </ChakraProvider>
   );
 };

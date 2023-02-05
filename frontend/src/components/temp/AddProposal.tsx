@@ -74,7 +74,7 @@ const AddProposal = () => {
   return (
     <>
       <Container mt="10">
-        <Box mb={10} fontSize={28} >Add a Proposal</Box>
+        <Box mb={10} fontSize={28} >Add a Client Proposal</Box>
         <form onSubmit={handleSubmit}>
           <FormControl>
             <FormLabel>Name of the Proposer</FormLabel>
