@@ -17,6 +17,13 @@ type contractProps = {
   signerOrProvider: unknown
 }
 
+type fundcontractProps = {
+  fundDeal(cidHex: string, arg2: { value: ethers.BigNumber; gasLimit: number; maxPriorityFeePerGas: unknown; }): unknown;
+  address: string,
+  abi: Abi,
+  signerOrProvider: unknown
+}
+
 export const createProposal = async({cid, dataSize, dealDurationInDays, dealStorageFees} : createProposalProps, contract : contractProps) => {
 
   try {
@@ -38,4 +45,30 @@ export const createProposal = async({cid, dataSize, dealDurationInDays, dealStor
     console.error("Contract method not invoked", error);
   }
 
+}
+
+
+type fundDealProps = {
+  cid: CID,
+  amount: number
+}
+
+export const fundDeal = async({cid, amount}: fundDealProps, contract: fundcontractProps) => {
+  try {
+    const cidV1 = new CID(cid).toV1();
+    const cidHexRaw = cidV1.toString('base16').substring(1);
+    const cidHex = `0x00${cidHexRaw}`;
+
+    if (contract) {
+      await contract?.fundDeal(cidHex, {
+        value: ethers.utils.parseEther(`${amount}`),
+        gasLimit: 1000000000,
+        maxPriorityFeePerGas: undefined
+      })
+    } else {
+      console.error('contract is null');
+    }
+  } catch(error) {
+    console.error("Funding deal failed", error);
+  }
 }

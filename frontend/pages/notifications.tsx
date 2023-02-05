@@ -5,6 +5,7 @@ import * as PushAPI from '@pushprotocol/restapi';
 import { Web3Context , EnvContext } from 'context';
 import { NotificationItem, chainNameType, SubscribedModal } from '@pushprotocol/uiweb';
 import { getCAIPAddress } from '../src/components/helpers';
+import { Default } from 'components/layouts/Default';
 
 const NotificationListContainer = styled.div`
   margin: 20px;
@@ -109,112 +110,114 @@ const NotificationsTest = () => {
 
   return (
       <div>
-        <Header>
-          <h2>Here are all the Notifications</h2>
-        </Header>
-                
-        <TabButtons>
-          <SectionButton onClick={() => { setViewType('notif') }}>Notifications</SectionButton>
-          <SectionButton onClick={() => { setViewType('spam') }}>Spam</SectionButton>
-          <SectionButton onClick={toggleSubscribedModal}>show subscribed modal</SectionButton>
-        </TabButtons>
+        <Default pageName='Notifications'>
+            <Header>
+            <h2>Here are all the Notifications</h2>
+            </Header>
+                    
+            <TabButtons>
+            <SectionButton onClick={() => { setViewType('notif') }}>Notifications</SectionButton>
+            <SectionButton onClick={() => { setViewType('spam') }}>Spam</SectionButton>
+            <SectionButton onClick={toggleSubscribedModal}>show subscribed modal</SectionButton>
+            </TabButtons>
 
-        
+            
 
-        {showSubscribe ? <SubscribedModal onClose={toggleSubscribedModal}/> : null}
+            {showSubscribe ? <SubscribedModal onClose={toggleSubscribedModal}/> : null}
 
-        <Section theme={theme}>
-          {viewType === 'notif' ? (
-            <>
-            <b className='headerText'>Notifications: </b>
-            <SectionItem>
-              {notifs ? (
-                <NotificationListContainer>
-                  {notifs.map((oneNotification, i) => {
-  
-                  const { 
-                    cta,
-                    title,
-                    message,
-                    app,
-                    icon,
-                    image,
-                    url,
-                    blockchain,
-                    secret,
-                    notification
-                  } = oneNotification;
+            <Section theme={theme}>
+            {viewType === 'notif' ? (
+                <>
+                <b className='headerText'>Notifications: </b>
+                <SectionItem>
+                {notifs ? (
+                    <NotificationListContainer>
+                    {notifs.map((oneNotification, i) => {
+    
+                    const { 
+                        cta,
+                        title,
+                        message,
+                        app,
+                        icon,
+                        image,
+                        url,
+                        blockchain,
+                        secret,
+                        notification
+                    } = oneNotification;
 
-                  // const chainName = blockchain as chainNameType;
+                    // const chainName = blockchain as chainNameType;
 
-                  return (
-                    <NotificationItem
-                      key={`notif-${i}`}
-                      notificationTitle={secret ? notification['title'] : title}
-                      notificationBody={secret ? notification['body'] : message}
-                      cta={cta}
-                      app={app}
-                      icon={icon}
-                      image={image}
-                      url={url}
-                      theme={theme}
-                      // chainName="ETH_TEST_KOVAN"
-                      chainName={blockchain as chainNameType}
-                    />
-                  );
-                })}
-                </NotificationListContainer>
-              ) : null}
-            </SectionItem>
-            </>
+                    return (
+                        <NotificationItem
+                        key={`notif-${i}`}
+                        notificationTitle={secret ? notification['title'] : title}
+                        notificationBody={secret ? notification['body'] : message}
+                        cta={cta}
+                        app={app}
+                        icon={icon}
+                        image={image}
+                        url={url}
+                        theme={theme}
+                        // chainName="ETH_TEST_KOVAN"
+                        chainName={blockchain as chainNameType}
+                        />
+                    );
+                    })}
+                    </NotificationListContainer>
+                ) : null}
+                </SectionItem>
+                </>
 
-          ) : (
-            <>
-              <b className='headerText'>Spams: </b>
-              <SectionItem>
-              {spams ? (
-                <NotificationListContainer>
-                  {spams.map((oneNotification, i) => {
-                  const { 
-                    cta,
-                    title,
-                    message,
-                    app,
-                    icon,
-                    image,
-                    url,
-                    blockchain,
-                    secret,
-                    notification
-                  } = oneNotification;
+            ) : (
+                <>
+                <b className='headerText'>Spams: </b>
+                <SectionItem>
+                {spams ? (
+                    <NotificationListContainer>
+                    {spams.map((oneNotification, i) => {
+                    const { 
+                        cta,
+                        title,
+                        message,
+                        app,
+                        icon,
+                        image,
+                        url,
+                        blockchain,
+                        secret,
+                        notification
+                    } = oneNotification;
 
-                  return (
-                    <NotificationItem
-                      key={`spam-${i}`}
-                      notificationTitle={secret ? notification['title'] : title}
-                      notificationBody={secret ? notification['body'] : message}
-                      cta={cta}
-                      app={app}
-                      icon={icon}
-                      image={image}
-                      url={url}
-                      // optional parameters for rendering spambox
-                      isSpam
-                      subscribeFn={async () => console.log("yayy spam")}
-                      isSubscribedFn={async () => false}
-                      theme={theme}
-                      chainName={blockchain as chainNameType}
-                    />
-                  );
-                })}
-                </NotificationListContainer>
-              ) : null}
-              </SectionItem>
-            </>
+                    return (
+                        <NotificationItem
+                        key={`spam-${i}`}
+                        notificationTitle={secret ? notification['title'] : title}
+                        notificationBody={secret ? notification['body'] : message}
+                        cta={cta}
+                        app={app}
+                        icon={icon}
+                        image={image}
+                        url={url}
+                        // optional parameters for rendering spambox
+                        isSpam
+                        subscribeFn={async () => console.log("yayy spam")}
+                        isSubscribedFn={async () => false}
+                        theme={theme}
+                        chainName={blockchain as chainNameType}
+                        />
+                    );
+                    })}
+                    </NotificationListContainer>
+                ) : null}
+                </SectionItem>
+                </>
 
-          )}
-        </Section>
+            )}
+            </Section>
 
+        </Default>
       </div>
   );
 }
