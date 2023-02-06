@@ -148,8 +148,7 @@ const ProposalDetails = () => {
         </VStack>
       </Default>
     )}
-    </div>
-    </>
+  </>
   )
 }
 export default ProposalDetails;
