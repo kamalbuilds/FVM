@@ -55,7 +55,6 @@ const newProposal = () => {
           dealStorageFees
         });
         if (formCollectionData) {
-          console.log("updated collection", formCollectionData)
           router.push('/proposalMarketPlace/proposals');
         }
       } else {
@@ -66,9 +65,7 @@ const newProposal = () => {
     }
 };
 
-  console.log("form colelction", formCollectionData)
   useEffect(() => {
-
     if(formCollectionData.findIndex((item: string | unknown) => item === formData) === -1) {
       setFormCollectionData([...formCollectionData, formData]);
     }

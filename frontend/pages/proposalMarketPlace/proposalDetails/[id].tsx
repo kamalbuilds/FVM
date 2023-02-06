@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
+import { useContract, useSigner } from 'wagmi';
 import CID from 'cids';
 import {
   CircularProgress,
@@ -19,11 +20,12 @@ import {
   Box
 } from '@chakra-ui/react'
 
-import { getAccountBalance, getAccountTransactions, getDealsByCID } from '../../api/beryxClient/clientMethods';
-import DetailCard from './DetailCard';
-import { Default } from 'components/layouts/Default';
 import { FormDataContext } from 'context';
-
+import { Default } from 'components/layouts/Default';
+import { fundDeal } from 'configs/methods/contractMethods';
+import DetailCard from './DetailCard';
+// import { getAccountBalance, getAccountTransactions, getDealsByCID } from '../../api/beryxClient/clientMethods';
+import { DaoBountyContractAddress, DataDaoBountyABI } from 'configs/constants';
 
 type expectedProposalParameters = {
   name: string,
@@ -36,12 +38,38 @@ type expectedProposalParameters = {
 const ProposalDetails = () => {
   const router = useRouter();
   const { id } = router.query;
+  const {data: signer } = useSigner({chainId: 3141});
 
   const { formCollectionData } = useContext<any>(FormDataContext);
+  const { cid, dealStoragefees} = formCollectionData;
 
-  const handleFund = () => {
-    console.log('fund')
+  const Contract = useContract({
+    address: DaoBountyContractAddress,
+    abi: DataDaoBountyABI,
+    signerOrProvider: signer
+  });
+
+  const handleFundButton = async(contentIdentifier: any, amount: number) => {
+    try {
+      if (await signer?.getAddress && Contract) {
+        const cidInstance = new CID(contentIdentifier);
+        const contractProps = {
+          fundDeal: Contract.fundDeal.bind(Contract),
+          address: Contract.address,
+          abi: Contract.abi,
+          signerOrProvider: Contract.signerOrProvider,
+        };
+        await fundDeal({cid : cidInstance, amount}, contractProps);
+
+      } else {
+        console.error('signer not available');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
   }
+
 
   const handleBid = () => {
     console.log('bid')
@@ -55,7 +83,12 @@ const ProposalDetails = () => {
           <Flex alignItems='center' flexDirection='column'>
             <DetailCard formCollectionData={formCollectionData} id={id} />
             <Flex mt={4} flexDirection='row'>
-                <Button colorScheme='green' onClick={handleFund}>Fund</Button>
+                <Button
+                  colorScheme='green'
+                  onClick={() => handleFundButton(cid, dealStoragefees)}
+                >
+                  Fund
+                </Button>
                 <Button colorScheme='green' onClick={handleBid}>Bid</Button>
             </Flex>
           </Flex>
