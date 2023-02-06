@@ -34,7 +34,7 @@ const BidModal = ({ formDataCollection, proposalId, contract, signer, setBidList
   console.log('signer', signer);
   console.log('bidForDeal', bidForDeal);
 
-  const handleBidButton = async(cidRaw: string, provider: string, price: number) => {
+  const handleBidButton = async(cidRaw: CID, provider: string, price: number) => {
     try {
       if (await signer?.getAddress && contract) {
         setSpinner(true);
@@ -47,7 +47,7 @@ const BidModal = ({ formDataCollection, proposalId, contract, signer, setBidList
             signerOrProvider: contract.signerOrProvider,
           };
           // await setFormData({cid, provider, price});
-          await bidForDeal({cidRaw, provider, price}, contractProps);
+          await bidForDeal({cid : cidInstance, provider, price}, contractProps);
           // if(formData) {
           //   setBidList(FormData)
           // }
@@ -91,7 +91,7 @@ const BidModal = ({ formDataCollection, proposalId, contract, signer, setBidList
           <br/>
           <FormControl>
            <FormLabel> Content Identifier </FormLabel>
-           <Input readOnly name="cid" value={cid} type="string" min='1' placeholder={cid}/>
+           <Input readOnly name="cid" value={cid} type="string" placeholder={cid}/>
 
            <FormLabel>Your wallet address?</FormLabel>
             <Input

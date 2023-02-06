@@ -73,11 +73,17 @@ export const fundDeal = async({cid, amount}: fundDealProps, contract: fundcontra
   }
 }
 
-export const bidForDeal = async({cidRaw, provider, price}: bidProps, contract: bidcontractProps) => {
+export const bidForDeal = async({cid, provider, price}: bidProps, contract: bidcontractProps) => {
   try {
     if (contract) {
-      const cidHex = `0x${cidRaw}`;
-      await contract.bidForDeal(cidHex, provider, ethers.utils.parseUnits(`${price}`, 'ether'), );
+      const cidV1 = new CID(cid).toV1();
+      const cidHexRaw = cidV1.toString('base16').substring(1);
+      const cidHex = `0x${cidHexRaw}`;
+      await contract.bidForDeal(cidHex, provider, ethers.utils.parseUnits(`${price}`, 'ether'),{
+        value: ethers.utils.parseEther(`${price}`),
+        gasLimit: 1000000000,
+        maxPriorityFeePerGas: undefined
+      });
     } else {
       console.error('contract is null');
     }
@@ -87,7 +93,7 @@ export const bidForDeal = async({cidRaw, provider, price}: bidProps, contract: b
 };
 
 type bidProps = {
-  cidRaw: string | CID,
+  cid: CID,
   provider: string,
   price: number
 }
