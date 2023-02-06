@@ -87,11 +87,6 @@ const NotificationsTest = () => {
     }
   }, [account, env, isCAIP]);
 
-//   const toggleTheme = () => {
-//     setTheme(lastTheme => {
-//       return lastTheme === 'dark' ? 'light' : 'dark'
-//     })
-//   };
 
   const toggleSubscribedModal = () => {
     setShowSubscribe((lastVal) => !lastVal);
