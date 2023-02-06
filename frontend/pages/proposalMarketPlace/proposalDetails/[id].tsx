@@ -21,7 +21,7 @@ import React from "react";
 import { FormDataContext, BidDataContext } from 'context';
 import { Default } from 'components/layouts/Default';
 import { fundDeal , activateDeal } from 'configs/methods/contractMethods';
-import DetailCard from '../DetailCard';
+import DetailCard from '../../../src/components/modules/ProposalDetailCard/DetailCard';
 import { DaoBountyContractAddress, DataDaoBountyABI } from 'configs/constants';
 import { BidModal } from 'components/modules/BidModal';
 

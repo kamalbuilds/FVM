@@ -1,0 +1,1 @@
+export { default as ProposalDetailCard} from './DetailCard';
