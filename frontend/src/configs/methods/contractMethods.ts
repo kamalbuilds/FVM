@@ -98,3 +98,28 @@ type bidcontractProps = {
   abi: Abi,
   signerOrProvider: ethers.Signer | ethers.providers.Provider
 }
+
+
+type activateDealProps = {
+  networkDealID: number
+}
+
+type activateDealContractProps = {
+  activateDataSetDealBySP(networkDealID: number): Promise<void>;
+  address: string,
+  abi: Abi,
+  signerOrProvider: ethers.Signer | ethers.providers.Provider
+}
+
+export const activateDeal = async({networkDealID}: activateDealProps, contract: activateDealContractProps) => {
+  try {
+    if (contract) {
+      await contract.activateDataSetDealBySP(networkDealID);
+    } else {
+      console.error('contract is null');
+    }
+  } catch (error) {
+    console.error("Activating deal failed", error);
+  }
+};
+

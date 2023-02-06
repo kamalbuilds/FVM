@@ -19,7 +19,7 @@ import {
 
 import { FormDataContext } from 'context';
 import { Default } from 'components/layouts/Default';
-import { fundDeal } from 'configs/methods/contractMethods';
+import { fundDeal , activateDeal } from 'configs/methods/contractMethods';
 import DetailCard from './DetailCard';
 import { DaoBountyContractAddress, DataDaoBountyABI } from 'configs/constants';
 import { BidModal } from 'components/modules/BidModal';
@@ -72,6 +72,24 @@ const ProposalDetails = () => {
     }
   }
 
+  const handleActivateButton = async(dealid : number) => {
+    try {
+      if (await signer?.getAddress && Contract) {
+        const contractProps = {
+          activateDataSetDealBySP: Contract.fundDeal.bind(Contract),
+          address: Contract.address,
+          abi: Contract.abi,
+          signerOrProvider: Contract.signerOrProvider,
+        };
+        await activateDeal({networkDealID : dealid}, contractProps);
+
+      } else {
+        console.error('signer not available');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
   const handleBid = () => {
     return (
       <BidModal />
@@ -123,6 +141,18 @@ const ProposalDetails = () => {
                   <Td>{}</Td>
                   <Td>{}</Td>
                   <Td>{}</Td>
+                  <Button
+                  colorScheme='red'
+                  onClick={() => handleActivateButton(12343)}
+                  >
+                    Activate
+                  </Button>
+                  <Button
+                  colorScheme='red'
+                  onClick={() => router.push('/connect')}
+                  >
+                    Connect
+                  </Button>
                 </Tr>
                 ))}
               </Tbody>
