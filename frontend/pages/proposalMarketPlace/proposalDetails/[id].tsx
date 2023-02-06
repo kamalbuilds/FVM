@@ -38,10 +38,17 @@ type expectedProposalParameters = {
 const ProposalDetails = () => {
   const router = useRouter();
   const { id } = router.query;
+  console.log(id);
+
+  //convert id to number
+  const proposalId = Number(id);
   const {data: signer } = useSigner({chainId: 3141});
 
   const { formCollectionData } = useContext<any>(FormDataContext);
   const { cid, dealStoragefees} = formCollectionData;
+  console.log(formCollectionData , cid , dealStoragefees);
+
+
 
   const Contract = useContract({
     address: DaoBountyContractAddress,
@@ -83,9 +90,10 @@ const ProposalDetails = () => {
           <Flex alignItems='center' flexDirection='column'>
             <DetailCard formCollectionData={formCollectionData} id={id} />
             <Flex mt={4} flexDirection='row'>
+                
                 <Button
                   colorScheme='green'
-                  onClick={() => handleFundButton(cid, dealStoragefees)}
+                  onClick={() => handleFundButton(formCollectionData[proposalId]?.cid, formCollectionData[proposalId]?.dealStorageFees)}
                 >
                   Fund
                 </Button>
