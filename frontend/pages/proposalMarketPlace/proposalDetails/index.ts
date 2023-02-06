@@ -1,1 +1,1 @@
-export {default as DetailsCard} from './DetailCard';
+export {default as ProposalDetails} from './[id]';
