@@ -29,7 +29,7 @@ const StorageProviders = () => {
  const [peerID, setPeerID] = useState<string>();
  const [error, setError] = useState<unknown>(null);
  const numberOfCards = 20;
-  const [minerscore, setMinerscore] = useState(0);
+  // const [minerscore, setMinerscore] = useState(0);
  // Turn state object with stored api object into an array
  const minerArray = miners ? Object.entries(miners) : [];
  // Necessary Conditional check to ensure data is there
@@ -67,9 +67,9 @@ const StorageProviders = () => {
     try {
       const response = await fetch(`https://api.filrep.io/api/miners?search=searchId`);
       const data = await response.json();
-      console.log(data, "score data");
-      setMinerscore(data.miners[0].score);
-      console.log(minerscore, "score");
+      // console.log(data, "score data");
+      // setMinerscore(data.miners[0].score);
+      // console.log(minerscore, "score");
     } catch (err) {
       setError(err);
     }
@@ -140,7 +140,8 @@ const StorageProviders = () => {
   useEffect(() => {
     askStorage();
    }, [peerID])
-  
+
+   console.log("minerResults", minerResults,"providerIDS", providerIDs)
  return (
   <Flex align="center" justify="center" direction="column" >
    <Flex gap={20}>
