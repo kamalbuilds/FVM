@@ -28,7 +28,7 @@ interface FormData {
 }
 
 const BidModal = ({ formDataCollection, proposalId, contract, signer} : any) => {
-  const { bidDataList, setBidDataList } = useContext<any>(BidDataContext);
+  const { BidDataList, setBidDataList } = useContext<any>(BidDataContext);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [ spinner, setSpinner ] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,13 +50,14 @@ const BidModal = ({ formDataCollection, proposalId, contract, signer} : any) => 
             abi: contract.abi,
             signerOrProvider: contract.signerOrProvider,
           };
+          await setFormData({cid, address, offer});
+          setBidDataList([...BidDataList, formData]);
+          console.log('Biddatalist' , BidDataList);
+
           await bidForDeal({cid : cidInstance, provider, price}, contractProps);
-          setIsSubmitting(true);
+     
           setSpinner(true);
-          await setFormData({cid, address, offer})
-          console.log('formData', formData)
-          await setBidDataList({formData})
-          console.log('bidDataList', bidDataList)
+          
 
         } else {
           console.error('Contract is not available')
@@ -69,17 +70,7 @@ const BidModal = ({ formDataCollection, proposalId, contract, signer} : any) => 
     }
   }
 
-  useEffect(() => {
-    if(bidDataList?.findIndex((item: any) =>
-    item.cid === formData.cid &&
-    item.address === formData.address &&
-    item.offer === formData.offer
-  ) === -1) {
-    setBidDataList([...bidDataList, formData]);
-    console.log(bidDataList)
-  }
-  console.log('bidDataList', bidDataList);
-  }, [isSubmitting])
+
 
   return (
    <div>
@@ -130,7 +121,7 @@ const BidModal = ({ formDataCollection, proposalId, contract, signer} : any) => 
             />
 
            <FormHelperText>
-            Place your bid on this storage proposal
+              Place your bid on this storage proposal
            </FormHelperText>
            <FormHelperText>It may take a second for your request to post to the network..</FormHelperText>
           </FormControl>
