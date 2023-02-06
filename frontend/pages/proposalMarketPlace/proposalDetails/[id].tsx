@@ -24,6 +24,7 @@ import { fundDeal , activateDeal } from 'configs/methods/contractMethods';
 import DetailCard from '../../../src/components/modules/ProposalDetailCard/DetailCard';
 import { DaoBountyContractAddress, DataDaoBountyABI } from 'configs/constants';
 import { BidModal } from 'components/modules/BidModal';
+import { BiddersTable } from 'components/modules/BiddersTable';
 
 type bidProps = {
   address: string,
@@ -113,38 +114,7 @@ const ProposalDetails = () => {
           spacing={4}
           align='stretch'
         >
-          <Heading>Current Bidders: </Heading>
-          <Flex mt={10}>
-            <Table>
-              <Thead>
-                <Tr>
-                  <Th>Bidder Address</Th>
-                  <Th>Bidder Price</Th>
-                </Tr>
-              </Thead>
-              {/* Data for display, we will later get it from the server */}
-              <Tbody>
-                {bidDataList?.length > 0 && bidDataList.map((item: any, i: number) => (
-                <Tr key={i}>
-                  <Td>{item?.address}</Td>
-                  <Td>{item?.price}</Td>
-                  <Button
-                  colorScheme='red'
-                  onClick={() => handleActivateButton(12343)}
-                  >
-                    Activate
-                  </Button>
-                  <Button
-                  colorScheme='red'
-                  onClick={() => router.push('/connect')}
-                  >
-                    Connect
-                  </Button>
-                </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </Flex>
+          <BiddersTable id={id} handleActivateButton={handleActivateButton} />
         </VStack>
       </Default>
     )}
