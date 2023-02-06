@@ -65,8 +65,9 @@ const newProposal = () => {
     }
 };
 
+  //ERROR: Problem with this useEffect, could be reason for duplicate undefined card proposal entry
   useEffect(() => {
-    if(formCollectionData.findIndex((item: string | unknown) => item === formData) === -1) {
+    if(formCollectionData?.length && formCollectionData.findIndex((item: string | unknown) => item === formData) === -1) {
       setFormCollectionData([...formCollectionData, formData]);
     }
   }, [formData])

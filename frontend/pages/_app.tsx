@@ -26,9 +26,8 @@ import {
   polygonMumbai,
   sepolia,
 } from '@wagmi/core/chains';
-import CID from 'cids';
+
 import { FormDataContext, FormDataProvider } from 'context/formDataContext';
-import { stringify } from 'querystring';
 
 
 interface Web3ReactState {
@@ -125,7 +124,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           </Web3Context.Provider>
         </EnvContext.Provider>
       </WagmiConfig>
-
     </ChakraProvider>
   );
 };

@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 type ContextProps = {
   children: React.ReactNode;
@@ -10,9 +10,9 @@ const FormDataProvider = ({children}: ContextProps) => {
  const [formCollectionData, setFormCollectionData] = useState([]);
 
  return (
-  <FormDataContext.Provider value={{formCollectionData, setFormCollectionData}}>
-   {children}
-  </FormDataContext.Provider>
+    <FormDataContext.Provider value={{formCollectionData, setFormCollectionData}}>
+    {children}
+    </FormDataContext.Provider>
  )
 
 }

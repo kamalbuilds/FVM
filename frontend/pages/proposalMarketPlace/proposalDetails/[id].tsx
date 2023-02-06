@@ -3,13 +3,9 @@ import { useRouter } from 'next/router';
 import { useContract, useSigner } from 'wagmi';
 import CID from 'cids';
 import {
-  CircularProgress,
   Button,
   VStack,
-  Center,
   Flex,
-  Spacer,
-  Container,
   Table,
   Thead,
   Tbody,
@@ -17,15 +13,16 @@ import {
   Th,
   Td,
   Heading,
-  Box
+  Box,
+  Stack
 } from '@chakra-ui/react'
 
 import { FormDataContext } from 'context';
 import { Default } from 'components/layouts/Default';
 import { fundDeal } from 'configs/methods/contractMethods';
 import DetailCard from './DetailCard';
-// import { getAccountBalance, getAccountTransactions, getDealsByCID } from '../../api/beryxClient/clientMethods';
 import { DaoBountyContractAddress, DataDaoBountyABI } from 'configs/constants';
+import { BidModal } from 'components/modules/BidModal';
 
 type expectedProposalParameters = {
   name: string,
@@ -39,9 +36,9 @@ const ProposalDetails = () => {
   const router = useRouter();
   const { id } = router.query;
   const {data: signer } = useSigner({chainId: 3141});
-
   const { formCollectionData } = useContext<any>(FormDataContext);
   const { cid, dealStoragefees} = formCollectionData;
+  const bidList = [];
 
   const Contract = useContract({
     address: DaoBountyContractAddress,
@@ -67,12 +64,12 @@ const ProposalDetails = () => {
     } catch (error) {
       console.error(error);
     }
-
   }
 
-
   const handleBid = () => {
-    console.log('bid')
+    return (
+      <BidModal />
+    )
   }
 
   return (
@@ -83,13 +80,12 @@ const ProposalDetails = () => {
           <Flex alignItems='center' flexDirection='column'>
             <DetailCard formCollectionData={formCollectionData} id={id} />
             <Flex mt={4} flexDirection='row'>
-                <Button
-                  colorScheme='green'
-                  onClick={() => handleFundButton(cid, dealStoragefees)}
-                >
+              <Stack direction='row' spacing='25px'>
+                <Button colorScheme='green'onClick={() => handleFundButton(cid, dealStoragefees)}>
                   Fund
                 </Button>
-                <Button colorScheme='green' onClick={handleBid}>Bid</Button>
+                <BidModal />
+              </Stack>
             </Flex>
           </Flex>
         </Box>
