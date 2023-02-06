@@ -1,49 +1,35 @@
-import { StarIcon } from "@chakra-ui/icons";
-import { Card, CardBody, CardHeader, Heading, Stack, Text } from "@chakra-ui/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, Heading, Stack, Text } from "@chakra-ui/react";
+import Link from "next/link";
 
-type proposalCardProps = {
- id: string,
- key: number,
- error: unknown
-}
-
-const proposalCard = ({id, error} : proposalCardProps) => {
-
- if(error) {
-   return (
-     <Card>
-      <CardHeader>
-        <Heading as="h5" size="md">
-          Error Has Occurred
-        </Heading>
-      </CardHeader>
-      <CardBody>
-        <Text>error: {error as string}</Text>
-      </CardBody>
-    </Card>
-   )
-  }
-
+const proposalCard = ({formCollectionData, id} : any) => {
+  const {name, cid, dataSize, dealDurationInDays, dealStorageFees} = formCollectionData;
  return (
-  <Card m={4}>
+  <Card m={4} width='50%'>
    <CardHeader>
+     <Heading as="h4" size="lg">
+       Proposer: {name}
+     </Heading>
      <Heading as="h5" size="md">
-       Miner ID: {id}
+      CID: {cid}
      </Heading>
    </CardHeader>
    <CardBody>
-     <Text>
-       Reputation Score:{" "}
-       <Stack isInline>
-         {[1, 2, 3, 4, 5].map((i) => (
-           <StarIcon
-             key={i}
-             color={id ? "teal" : "gray"}
-           />
-         ))}
-       </Stack>
-     </Text>
+    <Text>
+      Data size: {dataSize}
+    </Text>
+    <Text>
+      Deal Duration: {dealDurationInDays} days
+    </Text>
+    <Text>
+      Locked Funds: {dealStorageFees} tFIL
+
+    </Text>
    </CardBody>
+   <CardFooter>
+    <Link href="/proposalMarketPlace/proposalDetails/[id]" as={`/proposalMarketPlace/proposalDetails/${id}`}>
+      <Button>See more details</Button>
+    </Link>
+   </CardFooter>
   </Card>
  );
 }

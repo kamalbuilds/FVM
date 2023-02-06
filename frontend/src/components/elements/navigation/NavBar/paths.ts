@@ -1,7 +1,7 @@
 import { ISubNav } from '../SubNav/SubNav';
 
 const NAV_LINKS: ISubNav[] = [
-  { label: 'Home', href: '/' },
+  // { label: 'Home', href: '/' },
   {
     label: 'Transactions',
     href: '/transactions',
@@ -9,7 +9,7 @@ const NAV_LINKS: ISubNav[] = [
   {
     label: 'Notifications',
     href: '/notifications',
-    
+
   },
   {
     label: 'Balances',
@@ -30,7 +30,22 @@ const NAV_LINKS: ISubNav[] = [
     ],
   },
   {label: 'Miners', href: '/storageProviders'},
-  {label: 'Proposal MarketPlace', href: '/proposalMarketPlace'}
+  {
+    label: 'Proposal Marketplace',
+    href: '/proposalMarketPlace',
+    children: [
+      {
+        label: 'New Proposal',
+        subLabel: 'Submit a new proposal to marketplace',
+        href: '/proposalMarketPlace/newProposal',
+      },
+      {
+        label: 'View Market Proposals',
+        subLabel: 'View list of all marketplace proposals and bid on them',
+        href: '/proposalMarketPlace/proposals',
+      },
+    ],
+  },
 ];
 
 export default NAV_LINKS;

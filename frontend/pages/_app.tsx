@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, StatHelpText } from '@chakra-ui/react';
 import { extendTheme } from '@chakra-ui/react';
 import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
@@ -27,6 +27,8 @@ import {
   sepolia,
 } from '@wagmi/core/chains';
 import CID from 'cids';
+import { FormDataContext, FormDataProvider } from 'context/formDataContext';
+import { stringify } from 'querystring';
 
 
 interface Web3ReactState {
@@ -55,7 +57,7 @@ export const hyperspace :  Chain  = {
       http: ["https://api.hyperspace.node.glif.io/rpc/v0"]
     }
   },
-  
+
 };
 
 const { provider, webSocketProvider } = configureChains(
@@ -109,18 +111,21 @@ const web3Data : Web3ReactState = {
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const [isCAIP, setIsCAIP] = useState(false);
+
   return (
     <ChakraProvider resetCSS theme={theme}>
       <WagmiConfig client={client}>
         <EnvContext.Provider value={{ env, isCAIP }}>
           <Web3Context.Provider value={web3Data}>
             <SessionProvider session={pageProps.session} refetchInterval={0}>
-              <Component {...pageProps} />
+              <FormDataProvider>
+                <Component {...pageProps} />
+              </FormDataProvider>
             </SessionProvider>
           </Web3Context.Provider>
         </EnvContext.Provider>
       </WagmiConfig>
-      
+
     </ChakraProvider>
   );
 };
