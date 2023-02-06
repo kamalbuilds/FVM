@@ -31,6 +31,7 @@ const BidModal = ({ formDataCollection, proposalId, contract, signer} : any) => 
   const { bidDataList, setBidDataList } = useContext<any>(BidDataContext);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [ spinner, setSpinner ] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const cid = formDataCollection[proposalId]?.cid;
 
   const [offer, setOffer] = useState<number>(0);
@@ -50,10 +51,12 @@ const BidModal = ({ formDataCollection, proposalId, contract, signer} : any) => 
             signerOrProvider: contract.signerOrProvider,
           };
           await bidForDeal({cid : cidInstance, provider, price}, contractProps);
+          setIsSubmitting(true);
+          setSpinner(true);
           await setFormData({cid, address, offer})
           console.log('formData', formData)
           await setBidDataList({formData})
-          setSpinner(true);
+          console.log('bidDataList', bidDataList)
 
         } else {
           console.error('Contract is not available')
@@ -76,7 +79,7 @@ const BidModal = ({ formDataCollection, proposalId, contract, signer} : any) => 
     console.log(bidDataList)
   }
   console.log('bidDataList', bidDataList);
-  }, [spinner])
+  }, [isSubmitting])
 
   return (
    <div>
