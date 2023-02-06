@@ -71,12 +71,12 @@ const ProposalDetails = () => {
 
   const handleActivateButton = async(dealid : number) => {
     try {
-      if (await signer?.getAddress && Contract) {
+      if (await signer?.getAddress && contract) {
         const contractProps = {
-          activateDataSetDealBySP: Contract.fundDeal.bind(Contract),
-          address: Contract.address,
-          abi: Contract.abi,
-          signerOrProvider: Contract.signerOrProvider,
+          activateDataSetDealBySP: contract.fundDeal.bind(contract),
+          address: contract.address,
+          abi: contract.abi,
+          signerOrProvider: contract.signerOrProvider,
         };
         await activateDeal({networkDealID : dealid}, contractProps);
 
