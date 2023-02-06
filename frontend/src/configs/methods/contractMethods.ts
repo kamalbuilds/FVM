@@ -72,3 +72,29 @@ export const fundDeal = async({cid, amount}: fundDealProps, contract: fundcontra
     console.error("Funding deal failed", error);
   }
 }
+
+export const bidForDeal = async({cidRaw, provider, price}: bidProps, contract: bidcontractProps) => {
+  try {
+    if (contract) {
+      const cidHex = `0x${cidRaw}`;
+      await contract.bidForDeal(cidHex, provider, ethers.utils.parseUnits(`${price}`, 'ether'), );
+    } else {
+      console.error('contract is null');
+    }
+  } catch (error) {
+    console.error("Contract method not invoked", error);
+  }
+};
+
+type bidProps = {
+  cidRaw: string,
+  provider: string,
+  price: number
+}
+
+type bidcontractProps = {
+  bidForDeal(cidRaw: string, provider: string, price: ethers.BigNumber): Promise<void>;
+  address: string,
+  abi: Abi,
+  signerOrProvider: ethers.Signer | ethers.providers.Provider
+}
