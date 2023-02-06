@@ -24,12 +24,9 @@ import DetailCard from './DetailCard';
 import { DaoBountyContractAddress, DataDaoBountyABI } from 'configs/constants';
 import { BidModal } from 'components/modules/BidModal';
 
-type expectedProposalParameters = {
-  name: string,
-  cid: CID | string | undefined,
-  dataSize: number,
-  dealDurationInDays: number,
-  dealStorageFees: number
+type bidProps = {
+  address: string,
+  price: number
 }
 
 const ProposalDetails = () => {
@@ -42,11 +39,11 @@ const ProposalDetails = () => {
   const {data: signer } = useSigner({chainId: 3141});
   const { formCollectionData } = useContext<any>(FormDataContext);
   const { cid, dealStoragefees} = formCollectionData;
-  const bidList = [];
+  const [bidList, setBidList] = useState([]);
 
   console.log(formCollectionData , cid , dealStoragefees);
 
-  const Contract = useContract({
+  const contract = useContract({
     address: DaoBountyContractAddress,
     abi: DataDaoBountyABI,
     signerOrProvider: signer
@@ -54,13 +51,13 @@ const ProposalDetails = () => {
 
   const handleFundButton = async(contentIdentifier: any, amount: number) => {
     try {
-      if (await signer?.getAddress && Contract) {
+      if (await signer?.getAddress && contract) {
         const cidInstance = new CID(contentIdentifier);
         const contractProps = {
-          fundDeal: Contract.fundDeal.bind(Contract),
-          address: Contract.address,
-          abi: Contract.abi,
-          signerOrProvider: Contract.signerOrProvider,
+          fundDeal: contract.fundDeal.bind(contract),
+          address: contract.address,
+          abi: contract.abi,
+          signerOrProvider: contract.signerOrProvider,
         };
         await fundDeal({cid : cidInstance, amount}, contractProps);
 
@@ -70,12 +67,6 @@ const ProposalDetails = () => {
     } catch (error) {
       console.error(error);
     }
-  }
-
-  const handleBid = () => {
-    return (
-      <BidModal />
-    )
   }
 
   return (
@@ -93,7 +84,7 @@ const ProposalDetails = () => {
                 >
                   Fund
                 </Button>
-                <BidModal />
+                <BidModal formDataCollection={formCollectionData} signer={signer} contract={contract} proposalId={proposalId} setBidList={setBidList}/>
               </Stack>
             </Flex>
           </Flex>
@@ -107,22 +98,17 @@ const ProposalDetails = () => {
             <Table>
               <Thead>
                 <Tr>
-                  <Th>Name</Th>
-                  <Th>CID</Th>
-                  <Th>Data Size</Th>
-                  <Th>Deal duration Proposed</Th>
-                  <Th>Locked Funds</Th>
+                  <Th>Bidder Address</Th>
+                  <Th>Bidder Price</Th>
                 </Tr>
               </Thead>
               {/* Data for display, we will later get it from the server */}
               <Tbody>
-                {formCollectionData?.map((item: expectedProposalParameters, i: number) => (
+                {bidList?.map((item: bidProps, i: number) => (
                 <Tr key={i}>
-                  <Td>{}</Td>
-                  <Td>{}</Td>
-                  <Td>{}</Td>
-                  <Td>{}</Td>
-                  <Td>{}</Td>
+                  <Td>{item?.address}</Td>
+                  <Td>{item.price}</Td>
+                  <Td><Button>Accept Bid</Button></Td>
                 </Tr>
                 ))}
               </Tbody>

@@ -64,7 +64,7 @@ const newProposal = () => {
           dealStorageFees
         });
 
-        
+
         if (formCollectionData) {
           router.push('/proposalMarketPlace/proposals');
         }
@@ -78,7 +78,7 @@ const newProposal = () => {
 
 
   useEffect(() => {
-    if(formCollectionData.findIndex((item: any) => 
+    if(formCollectionData.findIndex((item: any) =>
       item.name === formData.name &&
       item.cid === formData.cid &&
       item.dataSize === formData.dataSize &&
@@ -113,7 +113,7 @@ const newProposal = () => {
           </FormControl>
           <FormControl>
             <FormLabel>Storage fees for the deal (in tFIL)</FormLabel>
-            <Input type="number" onChange={(e) => setDealStorageFees(parseInt(e.target.value))} required min='0.001' />
+            <Input type="number" onChange={(e) => setDealStorageFees(parseInt(e.target.value))} required min='1' />
           </FormControl>
           <Button
             mt={4}

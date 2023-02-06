@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
  Modal,
  ModalOverlay,
@@ -15,27 +16,55 @@ import {
  Heading,
  Spinner,
 } from "@chakra-ui/react";
-import { useSession } from 'next-auth/react';
-import { useState } from "react";
 
-const StorageRequestForm = () => {
+import { bidForDeal } from "configs/methods/contractMethods";
+import CID from "cids";
+
+const BidModal = ({ formDataCollection, proposalId, contract, signer, setBidList} : any) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
-  const { data } = useSession();
   const [ spinner, setSpinner ] = useState(false);
+  const cid = formDataCollection[proposalId]?.cid;
 
-  const handleSubmit = () => {
-   console.log("submitted");
-   setSpinner(true);
+  const [offer, setOffer] = useState<number>(0);
+  const [address, setAddress] = useState<string>("");
+  // const [formData, setFormData] = useState({})
 
-   setTimeout(() => {
-    setSpinner(false)
-   }, 5000)
+  console.log('cid', cid)
+  console.log('contract', contract);
+  console.log('signer', signer);
+  console.log('bidForDeal', bidForDeal);
 
+  const handleBidButton = async(cidRaw: string, provider: string, price: number) => {
+    try {
+      if (await signer?.getAddress && contract) {
+        setSpinner(true);
+        const cidInstance = new CID(cidRaw);
+        if(contract) {
+          const contractProps = {
+            bidForDeal: contract.bidForDeal.bind(contract),
+            address: contract.address,
+            abi: contract.abi,
+            signerOrProvider: contract.signerOrProvider,
+          };
+          // await setFormData({cid, provider, price});
+          await bidForDeal({cidRaw, provider, price}, contractProps);
+          // if(formData) {
+          //   setBidList(FormData)
+          // }
+        } else {
+          console.error('Contract is not available')
+        }
+      } else {
+        console.error('signer not available');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
   return (
    <div>
 
-    {data ? (
+    {/* {data ? ( */}
     <>
      <Button colorScheme='green' onClick={onOpen}>Bid</Button>
      <Modal
@@ -53,7 +82,7 @@ const StorageRequestForm = () => {
 
         <ModalBody>
          <form
-          id="submit-storage-request"
+          id="submit-bid"
           onSubmit={(event) => {
            event.preventDefault();
           }}
@@ -61,14 +90,25 @@ const StorageRequestForm = () => {
           <Heading as='h1' size='lg' noOfLines={1}>Submit Storage Request</Heading>
           <br/>
           <FormControl>
-           <FormLabel> Desired Storage Size? (in megaBytes) </FormLabel>
-           <Input type="number" min='1' placeholder="Enter your desired data storage size"/>
+           <FormLabel> Content Identifier </FormLabel>
+           <Input readOnly name="cid" value={cid} type="string" min='1' placeholder={cid}/>
 
-           <FormLabel>What you're willing to pay in FIL?</FormLabel>
-           <Input type="number" min='10' placeholder="Your price per mb" />
+           <FormLabel>Your wallet address?</FormLabel>
+            <Input
+              type="string"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
 
-           <FormLabel>How long do you wish to store the Data? (In days) </FormLabel>
-           <Input type="number" max='365' min='180' />
+           <FormLabel>Your offer</FormLabel>
+           <Input
+              type="number"
+              min="1"
+              placeholder="Your offer to proposer in tFIL"
+              value={offer}
+              onChange={(e) => setOffer(parseInt(e.target.value))}
+            />
+
 
            <FormHelperText>
             The available Storage Providers will accept your storage request
@@ -79,7 +119,7 @@ const StorageRequestForm = () => {
         </ModalBody>
 
         <ModalFooter>
-         <Button type="submit" form="submit-storage-request" onClick={handleSubmit}>
+         <Button type="submit" form="submit-bid" onClick={() => handleBidButton(cid, address, offer )}>
           {!spinner ? "Submit Request" : <Spinner/>}
 
          </Button>
@@ -87,9 +127,9 @@ const StorageRequestForm = () => {
        </ModalContent>
      </Modal>
     </>
-    ) : ''}
+    {/* ) : ''} */}
    </div>
   );
 };
 
-export default StorageRequestForm;
+export default BidModal;

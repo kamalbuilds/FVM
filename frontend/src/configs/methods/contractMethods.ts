@@ -87,7 +87,7 @@ export const bidForDeal = async({cidRaw, provider, price}: bidProps, contract: b
 };
 
 type bidProps = {
-  cidRaw: string,
+  cidRaw: string | CID,
   provider: string,
   price: number
 }
