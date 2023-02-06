@@ -6,14 +6,14 @@ import { BidDataContext } from "context";
 
 type BiddersTableProps = {
  id: number,
- handleFundButton: void;
+ handleActivateButton: any;
 }
 
-const BiddersTable = ({id, handleActivateButton}) => {
+const BiddersTable = ({id, handleActivateButton}: BiddersTableProps) => {
 
   const { BidDataList } = useContext<any>(BidDataContext);
 
-  console.log(BidDataContext.item?.address)
+ 
   return (
    <>
      <Heading>Current Bidders: </Heading>
@@ -33,7 +33,7 @@ const BiddersTable = ({id, handleActivateButton}) => {
           <Stack direction='row' spacing='25px' mt='5' >
            <Button
             colorScheme='red'
-            onClick={() => handleActivateButton(12343)}
+            onClick={() => handleActivateButton(BidDataList.length)}
            >
             Activate
            </Button>

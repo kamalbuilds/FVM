@@ -1,4 +1,3 @@
-
 import { Abi } from 'abitype';
 import CID from 'cids';
 import { ethers } from 'ethers';
@@ -79,8 +78,8 @@ export const bidForDeal = async({cid, provider, price}: bidProps, contract: bidc
       const cidV1 = new CID(cid).toV1();
       const cidHexRaw = cidV1.toString('base16').substring(1);
       const cidHex = `0x${cidHexRaw}`;
-      await contract.bidForDeal(cidHex, provider, {
-        price: ethers.utils.parseEther(`${price}`),
+      await contract.bidForDeal(cidHex, provider,{
+        price : ethers.utils.parseUnits(`${price}`, 'ether'),
         gasLimit: 1000000000,
         maxPriorityFeePerGas: undefined
       });
@@ -128,4 +127,3 @@ export const activateDeal = async({networkDealID}: activateDealProps, contract: 
     console.error("Activating deal failed", error);
   }
 };
-

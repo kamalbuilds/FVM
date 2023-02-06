@@ -31,7 +31,6 @@ const BidModal = ({ formDataCollection, proposalId, contract, signer} : any) => 
   const { BidDataList, setBidDataList } = useContext<any>(BidDataContext);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [ spinner, setSpinner ] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const cid = formDataCollection[proposalId]?.cid;
 
   const [offer, setOffer] = useState<number>(0);
