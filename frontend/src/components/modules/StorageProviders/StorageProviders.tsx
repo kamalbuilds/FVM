@@ -62,21 +62,21 @@ const StorageProviders = () => {
 
 
 
- useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`https://api.filrep.io/api/miners?search=searchId`);
-      const data = await response.json();
-      // console.log(data, "score data");
-      // setMinerscore(data.miners[0].score);
-      // console.log(minerscore, "score");
-    } catch (err) {
-      setError(err);
-    }
-  };
+//  useEffect(() => {
+//   const fetchData = async () => {
+//     try {
+//       const response = await fetch(`https://api.filrep.io/api/miners?search=searchId`);
+//       const data = await response.json();
+//       console.log(data, "score data");
+//       setMinerscore(data.miners[0].score);
+//       console.log(minerscore, "score");
+//     } catch (err) {
+//       setError(err);
+//     }
+//   };
 
-  fetchData();
-}, [searchId]);
+//   fetchData();
+// }, [searchId]);
 
 
  // Turn object into an array
@@ -153,8 +153,8 @@ const StorageProviders = () => {
    <Box>
     <Grid templateColumns='repeat(5, 1fr)' gap={1}>
      {minerResults && providerIDs.map((id, index) => (
-       <MinerCard id={id} key={index} error={error}   />
-      //  score={minerscore}
+       console.log(id, "id"),
+       <MinerCard id={id} key={index} error={error}  />
       ))}
     </Grid>
    </Box>

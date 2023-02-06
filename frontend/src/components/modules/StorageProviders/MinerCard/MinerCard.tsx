@@ -5,7 +5,6 @@ type MinerCardProps = {
  id: string,
  key: number,
  error: unknown,
-//  score: number,
 }
 
 const minerCard = ({id, error } : MinerCardProps) => {
@@ -24,7 +23,7 @@ const minerCard = ({id, error } : MinerCardProps) => {
     </Card>
    )
   }
-  // const starsToShow = Math.floor(score / 20);
+
  return (
   <Card m={4}>
    <CardHeader>
@@ -36,10 +35,10 @@ const minerCard = ({id, error } : MinerCardProps) => {
      <Text>
        Reputation Score:{" "}
        <Stack isInline>
-         {[1, 2, 3, 4, 5].map((i) => (
+         {[1].map((i) => (
            <StarIcon
              key={i}
-             color={i ? "teal" : "gray"}
+             color={"teal"}
            />
          ))}
        </Stack>
