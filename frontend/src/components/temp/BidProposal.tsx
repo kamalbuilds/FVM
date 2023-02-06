@@ -33,7 +33,7 @@ const BidProduct = ({ socket }: BidProductProps) => {
     if (Number(userInput) > Number(price)) {
       socket.emit('bidProduct', {
         price: Number(userInput),
-        last_bidder: localStorage.getItem('userName')!.toString(),
+        last_bidder: localStorage.getItem('userName')?.toString(),
         name
       });
       router.push('/products');
