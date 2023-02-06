@@ -15,7 +15,8 @@ import {
   Heading,
   Box,
   Stack
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+import React from "react";
 
 import { FormDataContext } from 'context';
 import { Default } from 'components/layouts/Default';
@@ -95,63 +96,66 @@ const ProposalDetails = () => {
 
   return (
     <>
-    {formCollectionData?.length > 0 && (
-      <Default pageName={`Proposal: ${id}`} >
-        <Box mt={4} mb={4}>
-          <Flex alignItems='center' flexDirection='column'>
-            <DetailCard formCollectionData={formCollectionData} id={id} />
-            <Flex mt={4} flexDirection='row'>
-              <Stack direction='row' spacing='25px'>
-                <Button
-                  colorScheme='green'
-                  onClick={() => handleFundButton(formCollectionData[proposalId]?.cid, formCollectionData[proposalId]?.dealStorageFees)}
-                >
-                  Fund
-                </Button>
-                <BidModal formDataCollection={formCollectionData} signer={signer} contract={contract} proposalId={proposalId} setBidList={setBidList}/>
-              </Stack>
-            </Flex>
-          </Flex>
-        </Box>
-        <VStack
-          spacing={4}
-          align='stretch'
-        >
-          <Heading>Current Bidders: </Heading>
-          <Flex mt={10}>
-            <Table>
-              <Thead>
-                <Tr>
-                  <Th>Bidder Address</Th>
-                  <Th>Bidder Price</Th>
-                </Tr>
-              </Thead>
-              {/* Data for display, we will later get it from the server */}
-              <Tbody>
-                {bidList?.map((item: bidProps, i: number) => (
-                <Tr key={i}>
-                  <Td>{item?.address}</Td>
-                  <Td>{item.price}</Td>
-                  <Button
-                  colorScheme='red'
-                  onClick={() => handleActivateButton(12343)}
-                  >
-                    Activate
-                  </Button>
-                  <Button
-                  colorScheme='red'
-                  onClick={() => router.push('/connect')}
-                  >
-                    Connect
-                  </Button>
-                </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </Flex>
-        </VStack>
-      </Default>
+    <h1>Proposal Details</h1>
+      <div>
+        {formCollectionData?.length > 0 && (
+          <Default pageName={`Proposal: ${id}`} >
+            <Box mt={4} mb={4}>
+              <Flex alignItems='center' flexDirection='column'>
+                <DetailCard formCollectionData={formCollectionData} id={id} />
+                <Flex mt={4} flexDirection='row'>
+                  <Stack direction='row' spacing='25px'>
+                    <Button
+                      colorScheme='green'
+                      onClick={() => handleFundButton(formCollectionData[proposalId]?.cid, formCollectionData[proposalId]?.dealStorageFees)}
+                    >
+                      Fund
+                    </Button>
+                    <BidModal formDataCollection={formCollectionData} signer={signer} contract={contract} proposalId={proposalId} setBidList={setBidList}/>
+                  </Stack>
+                </Flex>
+              </Flex>
+            </Box>
+            <VStack
+              spacing={4}
+              align='stretch'
+            >
+              <Heading>Current Bidders: </Heading>
+              <Flex mt={10}>
+                <Table>
+                  <Thead>
+                    <Tr>
+                      <Th>Bidder Address</Th>
+                      <Th>Bidder Price</Th>
+                    </Tr>
+                  </Thead>
+                  {/* Data for display, we will later get it from the server */}
+                  <Tbody>
+                    {bidList?.map((item: bidProps, i: number) => (
+                    <Tr key={i}>
+                      <Td>{item?.address}</Td>
+                      <Td>{item.price}</Td>
+                      <Button
+                      colorScheme='red'
+                      onClick={() => handleActivateButton(12343)}
+                      >
+                        Activate
+                      </Button>
+                      <Button
+                      colorScheme='red'
+                      onClick={() => router.push('/connect')}
+                      >
+                        Connect
+                      </Button>
+                    </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              </Flex>
+            </VStack>
+          </Default>
     )}
+    </div>
     </>
   )
 }
