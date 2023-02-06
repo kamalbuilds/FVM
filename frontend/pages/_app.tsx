@@ -7,7 +7,6 @@ import { createClient, WagmiConfig } from 'wagmi';
 import { configureChains } from '@wagmi/core';
 import { Chain } from '@wagmi/core';
 import { publicProvider } from 'wagmi/providers/public';
-import { Web3Context, EnvContext } from 'context';
 import {
   arbitrum,
   arbitrumGoerli,
@@ -27,7 +26,7 @@ import {
   sepolia,
 } from '@wagmi/core/chains';
 
-import { FormDataContext, FormDataProvider } from 'context/formDataContext';
+import { Web3Context, EnvContext, FormDataProvider, BidDataProvider } from 'context';
 
 
 interface Web3ReactState {
@@ -118,7 +117,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
           <Web3Context.Provider value={web3Data}>
             <SessionProvider session={pageProps.session} refetchInterval={0}>
               <FormDataProvider>
-                <Component {...pageProps} />
+                <BidDataProvider>
+                  <Component {...pageProps} />
+                </BidDataProvider>
               </FormDataProvider>
             </SessionProvider>
           </Web3Context.Provider>

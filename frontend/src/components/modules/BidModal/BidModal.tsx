@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
  Modal,
  ModalOverlay,
@@ -19,25 +19,28 @@ import {
 
 import { bidForDeal } from "configs/methods/contractMethods";
 import CID from "cids";
+import { BidDataContext } from "context/bidDataContext";
 
-const BidModal = ({ formDataCollection, proposalId, contract, signer, setBidList} : any) => {
+interface FormData {
+  cid: string | CID,
+  address: string,
+  offer: number,
+}
+
+const BidModal = ({ formDataCollection, proposalId, contract, signer} : any) => {
+  const { bidDataList, setBidDataList } = useContext<any>(BidDataContext);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [ spinner, setSpinner ] = useState(false);
   const cid = formDataCollection[proposalId]?.cid;
 
   const [offer, setOffer] = useState<number>(0);
   const [address, setAddress] = useState<string>("");
-  // const [formData, setFormData] = useState({})
-
-  console.log('cid', cid)
-  console.log('contract', contract);
-  console.log('signer', signer);
-  console.log('bidForDeal', bidForDeal);
-
+  const [formData, setFormData] = useState<FormData>({
+    cid: '', address: '', offer: 0
+  });
   const handleBidButton = async(cidRaw: CID, provider: string, price: number) => {
     try {
       if (await signer?.getAddress && contract) {
-        setSpinner(true);
         const cidInstance = new CID(cidRaw);
         if(contract) {
           const contractProps = {
@@ -46,11 +49,12 @@ const BidModal = ({ formDataCollection, proposalId, contract, signer, setBidList
             abi: contract.abi,
             signerOrProvider: contract.signerOrProvider,
           };
-          // await setFormData({cid, provider, price});
           await bidForDeal({cid : cidInstance, provider, price}, contractProps);
-          // if(formData) {
-          //   setBidList(FormData)
-          // }
+          await setFormData({cid, address, offer})
+          console.log('formData', formData)
+          await setBidDataList({formData})
+          setSpinner(true);
+
         } else {
           console.error('Contract is not available')
         }
@@ -61,6 +65,19 @@ const BidModal = ({ formDataCollection, proposalId, contract, signer, setBidList
       console.error(error);
     }
   }
+
+  useEffect(() => {
+    if(bidDataList?.findIndex((item: any) =>
+    item.cid === formData.cid &&
+    item.address === formData.address &&
+    item.offer === formData.offer
+  ) === -1) {
+    setBidDataList([...bidDataList, formData]);
+    console.log(bidDataList)
+  }
+  console.log('bidDataList', bidDataList);
+  }, [spinner])
+
   return (
    <div>
 
@@ -87,7 +104,7 @@ const BidModal = ({ formDataCollection, proposalId, contract, signer, setBidList
            event.preventDefault();
           }}
          >
-          <Heading as='h1' size='lg' noOfLines={1}>Submit Storage Request</Heading>
+          <Heading as='h1' size='lg' noOfLines={1}>Submit Proposal Bid </Heading>
           <br/>
           <FormControl>
            <FormLabel> Content Identifier </FormLabel>
@@ -109,9 +126,8 @@ const BidModal = ({ formDataCollection, proposalId, contract, signer, setBidList
               onChange={(e) => setOffer(parseInt(e.target.value))}
             />
 
-
            <FormHelperText>
-            The available Storage Providers will accept your storage request
+            Place your bid on this storage proposal
            </FormHelperText>
            <FormHelperText>It may take a second for your request to post to the network..</FormHelperText>
           </FormControl>

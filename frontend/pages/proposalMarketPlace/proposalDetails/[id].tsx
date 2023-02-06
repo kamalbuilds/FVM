@@ -17,7 +17,7 @@ import {
   Stack
 } from '@chakra-ui/react'
 
-import { FormDataContext } from 'context';
+import { FormDataContext, BidDataContext } from 'context';
 import { Default } from 'components/layouts/Default';
 import { fundDeal , activateDeal } from 'configs/methods/contractMethods';
 import DetailCard from './DetailCard';
@@ -32,16 +32,16 @@ type bidProps = {
 const ProposalDetails = () => {
   const router = useRouter();
   const { id } = router.query;
-  console.log(id);
 
   //convert id to number
   const proposalId = Number(id);
   const {data: signer } = useSigner({chainId: 3141});
-  const { formCollectionData } = useContext<any>(FormDataContext);
-  const { cid, dealStoragefees} = formCollectionData;
-  const [bidList, setBidList] = useState([]);
 
-  console.log(formCollectionData , cid , dealStoragefees);
+  const { formCollectionData } = useContext<any>(FormDataContext);
+  // const { cid, dealStoragefees} = formCollectionData;
+
+  const { bidDataList } = useContext<any>(BidDataContext);
+
 
   const contract = useContract({
     address: DaoBountyContractAddress,
@@ -87,11 +87,6 @@ const ProposalDetails = () => {
       console.error(error);
     }
   }
-  const handleBid = () => {
-    return (
-      <BidModal />
-    )
-  }
 
   return (
     <>
@@ -108,7 +103,7 @@ const ProposalDetails = () => {
                 >
                   Fund
                 </Button>
-                <BidModal formDataCollection={formCollectionData} signer={signer} contract={contract} proposalId={proposalId} setBidList={setBidList}/>
+                <BidModal formDataCollection={formCollectionData} signer={signer} contract={contract} proposalId={proposalId} />
               </Stack>
             </Flex>
           </Flex>
@@ -128,10 +123,10 @@ const ProposalDetails = () => {
               </Thead>
               {/* Data for display, we will later get it from the server */}
               <Tbody>
-                {bidList?.map((item: bidProps, i: number) => (
+                {bidDataList?.length > 0 && bidDataList.map((item: any, i: number) => (
                 <Tr key={i}>
                   <Td>{item?.address}</Td>
-                  <Td>{item.price}</Td>
+                  <Td>{item?.price}</Td>
                   <Button
                   colorScheme='red'
                   onClick={() => handleActivateButton(12343)}
