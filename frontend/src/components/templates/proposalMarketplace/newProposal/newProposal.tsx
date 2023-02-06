@@ -16,7 +16,6 @@ import { createProposal } from '../../../../configs/methods/contractMethods';
 import { FormDataContext } from 'context';
 
 const newProposal = () => {
-  const dummyformData = new FormData();
   const [formData, setFormData] = useState<FormData>({ name: '', cid: '', dataSize: 0, dealDurationInDays: 0, dealStorageFees: 0 });
   const { formCollectionData, setFormCollectionData } = useContext<any>(FormDataContext);
 
