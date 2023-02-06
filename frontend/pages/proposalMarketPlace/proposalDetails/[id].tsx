@@ -15,7 +15,8 @@ import {
   Heading,
   Box,
   Stack
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+import React from "react";
 
 import { FormDataContext, BidDataContext } from 'context';
 import { Default } from 'components/layouts/Default';
@@ -147,6 +148,7 @@ const ProposalDetails = () => {
         </VStack>
       </Default>
     )}
+    </div>
     </>
   )
 }

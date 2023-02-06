@@ -153,7 +153,6 @@ const StorageProviders = () => {
    <Box>
     <Grid templateColumns='repeat(5, 1fr)' gap={1}>
      {minerResults && providerIDs.map((id, index) => (
-       console.log(id, "id"),
        <MinerCard id={id} key={index} error={error}  />
       ))}
     </Grid>

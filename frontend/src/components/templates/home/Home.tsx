@@ -4,7 +4,6 @@ import { Heading, VStack, List, ListIcon, ListItem } from '@chakra-ui/react';
 import { io } from 'socket.io-client';
 
 import {StorageRequestForm} from '../../modules/StorageRequestForm';
-import { AddProposal, BidProposal, Proposals } from '../../temp/index';
 
 const socket = io('http://localhost:4000', { transports: ['websocket'] });
 

@@ -1,8 +1,9 @@
 import { Default } from '../src/components/layouts/Default';
 // import { ProposalCard } from '../src/components/modules/ProposalCard';
-import { Proposals } from '../src/components/temp';
-const ProposalMarketPlace = () => {
+import { Proposals } from 'components/templates/proposalMarketplace/proposals';
 
+
+const ProposalMarketPlace = () => {
 
  return (
     <Default pageName="proposalMarketPlace">
