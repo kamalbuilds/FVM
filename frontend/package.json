@@ -56,5 +56,8 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "engines": {
+    "yarn": "1.22.19"
   }
 }
