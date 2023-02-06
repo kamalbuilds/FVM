@@ -88,7 +88,6 @@ const ProposalDetails = () => {
       console.error(error);
     }
   }
-
   return (
     <>
     {formCollectionData?.length > 0 && (
