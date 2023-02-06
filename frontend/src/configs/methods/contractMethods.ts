@@ -79,7 +79,8 @@ export const bidForDeal = async({cid, provider, price}: bidProps, contract: bidc
       const cidV1 = new CID(cid).toV1();
       const cidHexRaw = cidV1.toString('base16').substring(1);
       const cidHex = `0x${cidHexRaw}`;
-      await contract.bidForDeal(cidHex, provider, ethers.utils.parseUnits(`${price}`, 'ether'),{
+      await contract.bidForDeal(cidHex, provider, {
+        price: ethers.utils.parseEther(`${price}`),
         gasLimit: 1000000000,
         maxPriorityFeePerGas: undefined
       });
@@ -98,7 +99,7 @@ type bidProps = {
 }
 
 type bidcontractProps = {
-  bidForDeal(cidRaw: string, provider: string, price: ethers.BigNumber): Promise<void>;
+  bidForDeal(cidRaw: string, provider: string, arg3: { price: ethers.BigNumber; gasLimit: number; maxPriorityFeePerGas: unknown; }): Promise<void>;
   address: string,
   abi: Abi,
   signerOrProvider: ethers.Signer | ethers.providers.Provider
