@@ -3,5 +3,5 @@ import DataDaoBounty from './abis/DataDaoBounty.json'
 export const DataDaoBountyABI = DataDaoBounty.output.abi;
 
 //Deployed on Georli
-export const DaoBountyContractAddress ='0x93C7F0d2ebf60D22f032C8Da10D7f173562fD813';
-export const MembershipNFT = '0xa392B880bC7Db442FBc9aa7ae5A0Fd053b04174C';
+export const DaoBountyContractAddress ='0x2c8693c035fF2eC33EFf3E233d80d3EfE23e1913';
+export const MembershipNFT = '0x8d23020865E88e35DC76A987A1aC0A3768bfB18B';

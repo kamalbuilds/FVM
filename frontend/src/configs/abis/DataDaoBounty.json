@@ -224,6 +224,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "EPNS_COMM_ADDRESS",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "uint64",
@@ -250,6 +263,29 @@
 					}
 				],
 				"name": "approveOrRejectDataSet",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "_cidraw",
+						"type": "bytes"
+					},
+					{
+						"internalType": "address",
+						"name": "_provider",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_price",
+						"type": "uint256"
+					}
+				],
+				"name": "bidForDeal",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -756,11 +792,11 @@
 			]
 		},
 		"contracts/data-dao/DataDAOBounty.sol": {
-			"keccak256": "0x9f589b6ad91ea2c0cf209929b37aa8d559d82a5c906602877271b854204a55b9",
+			"keccak256": "0x56141c7c8d807c51c6b7b25ad0ed05e5e4220dff7ee329f5d6e4325d611cdfa8",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://3294b78eed1c38d42343bebe50416e77bd51c42db9767ef8fbdb26243cf89b6f",
-				"dweb:/ipfs/QmUYFQg95HdNYmMDvvTP2QjkF3dxPTaZW63qrMyQjtoGkV"
+				"bzz-raw://4a6ef2daaf4719acbd986dbdb882f8fe1ee290e7f01ac538903f320a7477c5da",
+				"dweb:/ipfs/QmdGtQVEdNQtV8KSyLbBW4jK7jMfWZkwUwK2SYMCE3uQba"
 			]
 		},
 		"contracts/data-dao/base/DataDAOConstants.sol": {
