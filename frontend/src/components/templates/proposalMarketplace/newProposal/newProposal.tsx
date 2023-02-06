@@ -16,7 +16,8 @@ import { createProposal } from '../../../../configs/methods/contractMethods';
 import { FormDataContext } from 'context';
 
 const newProposal = () => {
-  const [formData, setFormData] = useState({});
+  const dummyformData = new FormData();
+  const [formData, setFormData] = useState<FormData>({ name: '', cid: '', dataSize: 0, dealDurationInDays: 0, dealStorageFees: 0 });
   const { formCollectionData, setFormCollectionData } = useContext<any>(FormDataContext);
 
   const [name, setName] = useState('');
@@ -27,12 +28,20 @@ const newProposal = () => {
 
   const router = useRouter();
   const {data: signer } = useSigner({chainId: 3141});
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const contract = useContract({
     address: DaoBountyContractAddress,
     abi: DataDaoBountyABI,
     signerOrProvider: signer
   });
+
+  interface FormData {
+  name: string;
+  cid: string;
+  dataSize: number;
+  dealDurationInDays: number;
+  dealStorageFees: number;
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,7 +55,7 @@ const newProposal = () => {
           signerOrProvider: contract.signerOrProvider,
         };
         await createProposal({ cid: cidInstance, dataSize, dealDurationInDays, dealStorageFees }, contractProps);
-
+        setIsSubmitting(true);
         await setFormData({
           name,
           cid,
@@ -54,6 +63,8 @@ const newProposal = () => {
           dealDurationInDays,
           dealStorageFees
         });
+
+        
         if (formCollectionData) {
           router.push('/proposalMarketPlace/proposals');
         }
@@ -65,12 +76,19 @@ const newProposal = () => {
     }
 };
 
-  //ERROR: Problem with this useEffect, could be reason for duplicate undefined card proposal entry
+
   useEffect(() => {
-    if(formCollectionData?.length && formCollectionData.findIndex((item: string | unknown) => item === formData) === -1) {
+    if(formCollectionData.findIndex((item: any) => 
+      item.name === formData.name &&
+      item.cid === formData.cid &&
+      item.dataSize === formData.dataSize &&
+      item.dealDurationInDays === formData.dealDurationInDays &&
+      item.dealStorageFees === formData.dealStorageFees
+    ) === -1) {
       setFormCollectionData([...formCollectionData, formData]);
     }
-  }, [formData])
+  }, [isSubmitting])
+
 
   return (
     <>
@@ -95,7 +113,7 @@ const newProposal = () => {
           </FormControl>
           <FormControl>
             <FormLabel>Storage fees for the deal (in tFIL)</FormLabel>
-            <Input type="number" onChange={(e) => setDealStorageFees(parseInt(e.target.value))} required />
+            <Input type="number" onChange={(e) => setDealStorageFees(parseInt(e.target.value))} required min='0.001' />
           </FormControl>
           <Button
             mt={4}
