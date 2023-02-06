@@ -112,7 +112,7 @@ const newProposal = () => {
           </FormControl>
           <FormControl>
             <FormLabel>Storage fees for the deal (in tFIL)</FormLabel>
-            <Input type="number" onChange={(e) => setDealStorageFees(parseInt(e.target.value))} required min='1' />
+            <Input type="number" onChange={(e) => setDealStorageFees(parseInt(e.target.value))} required min='0.001' />
           </FormControl>
           <Button
             mt={4}
