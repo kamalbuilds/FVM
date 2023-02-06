@@ -1,5 +1,5 @@
 import { useContext} from 'react'
-
+import React from 'react';
 import { ProposalCard } from 'components/modules/ProposalCard';
 import { FormDataContext } from 'context';
 
