@@ -1,8 +1,9 @@
-# Marketplace for storage on top of  FVM
+# Marketplace for storage bidding built on top of FVM
 
 ## Deployments 
 
 Spheron - https://fvm-293b6e.spheron.app/
+
 Vercel - https://fvm-storage-bounty.vercel.app/
 
 The Smart Contract code for this project could be found here - https://github.com/legendarykamal/FVM-Contract 
@@ -60,34 +61,4 @@ The Reputation of the miners grow as they do successful deals in the future (In 
 
 ## The Project Story of How It was built 
 
-The Project was built from lots of hours of hardwork put in.
-
-First, the mvp was structured of how things would go on the platform.
- 
-then the  contract for the project was written https://github.com/legendarykamal/FVM-Contract/blob/master/contracts/data-dao/DataDAOBounty.sol
-
-which used zondax MarketApi to call FileCoinDeals which was the eccentric point of our project.
-
-After this we started with making of the UI , we utilised the powers of NextJS for our frontend , combined it with wagmi for the wallet setup.
-
-Hyperspace Testnet was set by me after getting no resources for it. Many bugs came our way but we held tightly motivated to build this amazing project with over 80+ commits.
-
-Data Persistency problem was solved using Context Api , then we came upon adding features .
-
-We used Push Notifications to notify our clients whenever any storage Provider bidded for their proposal.
-
-Utilised Huddle01 to give tokengated authentic one to one discussions among the clients and SP before the final deal.
-
-All the steps of storage of Deals on FVM were tried to be implemented in short span of time. But we loved the process.
-
-The hacky thing was the bidding process in our project, context api and FVM were not easy to deal with but we implemented the bidding functionality on our platform :) 
-
-Marketplace for storage on top of FVM
-
-Push Protocol is used to notify the Users on the platform
-
-Client - Get Notified as soon as a provider places a bid for your proposal .
-
-SP - Get notified as soon as your bid gets accepted
-
-Huddle01 is used to connect the sp with clients prior to finalising the deals
+ Found here - > https://ethglobal.com/showcase/fvm-storage-bounty-hub-74tgi
