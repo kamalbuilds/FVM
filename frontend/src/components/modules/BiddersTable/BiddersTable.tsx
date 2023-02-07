@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { BidDataContext } from "context";
 
 type BiddersTableProps = {
- id: number,
+ id: number ,
  handleActivateButton: any;
 }
 

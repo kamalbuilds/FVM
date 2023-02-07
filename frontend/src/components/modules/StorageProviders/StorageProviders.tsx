@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 import React, {useState, useEffect, useRef} from 'react';
 import {
  Flex,
@@ -106,6 +107,7 @@ const StorageProviders = () => {
     }
   }
 
+  
   fetch('https://api.zondax.ch/fil/data/v1/hyperspace/account/info/f410ffhguuq6t2otsrcid6zq5gm6hh6kl7t5aucxr6by', {
   method: 'GET',
   headers: {
@@ -113,19 +115,20 @@ const StorageProviders = () => {
     'authorization': 'Bearer eyJhbGciOiJFUzI1NiIsImtpZCI6ImtleS1iZXJ5eC0wMDEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlcyI6W10sImlzcyI6IlpvbmRheCIsImF1ZCI6WyJiZXJ5eCJdLCJleHAiOjE2NzY1NjA0NzgsImp0aSI6IkthbWFsIE5heWFuLGdlbml1c2FtYW5zaW5naEBnbWFpbC5jb20ifQ.dZnOlLu8BSbLbXixdesxlWgGCWvu2SVXsPU5z-9Kei2mpJXNIynhZ4SDVv7FOknqdiTBOjcxShz_Sd6YFnKvTg',
   },
 })
-  .then(response => response.json())
-  .then(data => console.log('here',data))
-  .catch(error => console.error(error));
- const fetchMinerDetails = async () => {
-  try {
-   if(searchId) {
-    const data2 = await getStorageProviderById(searchId, undefined);
-    setMinerDetails(data2 as Miners[]);
-   }
-  } catch(err) {
-   setError(err);
-  }
- }
+  .then((response => response.json()))
+  .then((data => console.log('here',data)))
+ 
+  const fetchMinerDetails = async () => {
+    try {
+     if (searchId) {
+      const data2 = await getStorageProviderById(searchId, undefined);
+      setMinerDetails(data2 as Miners[]);
+     }
+    } catch (err) {
+     setError(err);
+    }
+  };
+  
 
  useEffect(() => {
   fetchMiners();

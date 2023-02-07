@@ -114,7 +114,8 @@ const ProposalDetails = () => {
           spacing={4}
           align='stretch'
         >
-          <BiddersTable id={id} handleActivateButton={handleActivateButton} />
+          <BiddersTable id={proposalId} handleActivateButton={handleActivateButton} />
+
         </VStack>
       </Default>
     )}
